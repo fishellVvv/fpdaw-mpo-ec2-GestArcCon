@@ -1,4 +1,5 @@
 from colorama import Style
+import os
 
 ''' funciones output '''
 
@@ -24,12 +25,6 @@ def imp_marco(mensaje, color = None):
 
 ''' funciones input '''
 
-def pulsa_enter(color = None):
-    if color != None:
-        input(color + "\nPulsa enter para continuar..." + Style.RESET_ALL)
-    else:
-        input("\nPulsa enter para continuar...")
-
 def leer_entero(mensaje = "Introduce un número entero: ", color = None):
     try:
         imprimir(mensaje, color)
@@ -45,3 +40,19 @@ def leer_string(mensaje = "Introduce un texto: ", color = None):
 def leer_string_en_lista(mensaje = "Introduce un texto: ", color = None):
     imprimir(mensaje, color)
     return input().split(" ")
+
+''' otras funciones '''
+
+def pulsa_enter(color = None):
+    if color != None:
+        input(color + "\nPulsa enter para continuar..." + Style.RESET_ALL)
+    else:
+        input("\nPulsa enter para continuar...")
+
+def obtener_extension(ruta, archivo):
+    if os.path.isdir(ruta+archivo):
+        return "dir"
+    elif len(archivo.split(".")) == 1:
+        return "file"
+    else:
+        return "." + archivo.split(".")[-1]
