@@ -1,4 +1,4 @@
-from utils import color, io
+from utils import color, io, log
 
 def mostrar_menu():
     # Muestra las opciones disponibles
@@ -16,31 +16,37 @@ def mostrar_menu():
 def listar_contenido():
     # Lista archivos y carpetas del directorio actual
     io.imprimir("listar_contenido()\n")
+    log.registrar_com("listar_contenido", path)
     io.pulsa_enter()
 
 def crear_directorio():
     # Crea una nueva carpeta
     io.imprimir("crear_directorio()\n")
+    log.registrar_com("crear_directorio", path)
     io.pulsa_enter()
 
 def crear_archivo():
     # Crea un archivo de texto y permite escribir en él
     io.imprimir("crear_archivo()\n")
+    log.registrar_com("crear_archivo", path)
     io.pulsa_enter()
 
 def escribir_en_archivo():
     # Abre un archivo existente y añade texto al final
     io.imprimir("escribir_en_archivo()\n")
+    log.registrar_com("escribir_en_archivo", path)
     io.pulsa_enter()
 
 def eliminar_elemento():
     # Elimina un archivo o carpeta
     io.imprimir("eliminar_elemento()\n")
+    log.registrar_com("eliminar_elemento", path)
     io.pulsa_enter()
 
 def mostrar_informacion():
     # Muestra tamaño y fecha de modificación
     io.imprimir("mostrar_informacion()\n")
+    log.registrar_com("mostrar_informacion", path)
     io.pulsa_enter()
 
 def main():

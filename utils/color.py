@@ -1,5 +1,7 @@
 from colorama import Fore
 
+''' color '''
+
 fore = {
     "MENU": Fore.BLUE,
     "EXIT": Fore.RED,
