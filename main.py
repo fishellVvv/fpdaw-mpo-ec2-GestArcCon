@@ -1,6 +1,16 @@
+from utils import color, io
+
 def mostrar_menu():
     # Muestra las opciones disponibles
-    pass
+    io.imp_marco(""" ==GestArcCon== (Gestor de Archivos en Consola)
+1. Listar contenido del directorio actual
+2. Crear un nuevo directorio
+3. Crear un archivo de texto
+4. Escribir texto en un archivo existente
+5. Eliminar un archivo o directorio
+6. Mostrar información del archivo
+7. Salir""",
+    color.fore["MENU"])
 
 def listar_contenido():
     # Lista archivos y carpetas del directorio actual
@@ -28,4 +38,34 @@ def mostrar_informacion():
 
 def main():
     # Bucle principal del programa
-    pass
+    while True:
+        mostrar_menu()
+        try:
+            opcion = io.leer_entero("Selecciona una opción: ", color.fore["INPUT"])
+        except ValueError:
+            io.imprimir("❌ Error: introduce un número del 1 al 7.", color.fore["ERROR"])
+            continue
+
+        match opcion:
+            case 1:
+                listar_contenido()
+            case 2:
+                crear_directorio()
+            case 3:
+                crear_archivo()
+            case 4:
+                escribir_en_archivo()
+            case 5:
+                eliminar_elemento()
+            case 6:
+                mostrar_informacion()
+            case 7:
+                io.imprimir("Saliendo...", color.fore["EXIT"])
+                break
+            case _:
+                io.imprimir("❌ Error: introduce un número del 1 al 7.", color.fore["ERROR"])
+
+    io.imprimir("\nFin del programa.", color.fore["EXIT"])
+
+if __name__ == '__main__':
+    main()
