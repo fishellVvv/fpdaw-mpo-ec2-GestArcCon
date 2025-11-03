@@ -2,7 +2,8 @@ from utils import color, io
 
 def mostrar_menu():
     # Muestra las opciones disponibles
-    io.imp_marco(""" ==GestArcCon== (Gestor de Archivos en Consola)
+    io.imp_marco("""   === GestArcCon ===
+                 
 1. Listar contenido del directorio actual
 2. Crear un nuevo directorio
 3. Crear un archivo de texto
@@ -14,27 +15,33 @@ def mostrar_menu():
 
 def listar_contenido():
     # Lista archivos y carpetas del directorio actual
-    pass
+    io.imprimir("listar_contenido()\n")
+    io.pulsa_enter()
 
 def crear_directorio():
     # Crea una nueva carpeta
-    pass
+    io.imprimir("crear_directorio()\n")
+    io.pulsa_enter()
 
 def crear_archivo():
     # Crea un archivo de texto y permite escribir en él
-    pass
+    io.imprimir("crear_archivo()\n")
+    io.pulsa_enter()
 
 def escribir_en_archivo():
     # Abre un archivo existente y añade texto al final
-    pass
+    io.imprimir("escribir_en_archivo()\n")
+    io.pulsa_enter()
 
 def eliminar_elemento():
     # Elimina un archivo o carpeta
-    pass
+    io.imprimir("eliminar_elemento()\n")
+    io.pulsa_enter()
 
 def mostrar_informacion():
     # Muestra tamaño y fecha de modificación
-    pass
+    io.imprimir("mostrar_informacion()\n")
+    io.pulsa_enter()
 
 def main():
     # Bucle principal del programa
@@ -43,7 +50,8 @@ def main():
         try:
             opcion = io.leer_entero("Selecciona una opción: ", color.fore["INPUT"])
         except ValueError:
-            io.imprimir("❌ Error: introduce un número del 1 al 7.", color.fore["ERROR"])
+            io.imprimir("❌ Error: introduce un número del 1 al 7.\n", color.fore["ERROR"])
+            io.pulsa_enter()
             continue
 
         match opcion:
@@ -63,9 +71,10 @@ def main():
                 io.imprimir("Saliendo...", color.fore["EXIT"])
                 break
             case _:
-                io.imprimir("❌ Error: introduce un número del 1 al 7.", color.fore["ERROR"])
+                io.imprimir("❌ Error: introduce un número del 1 al 7.\n", color.fore["ERROR"])
+                io.pulsa_enter()
 
-    io.imprimir("\nFin del programa.", color.fore["EXIT"])
+    io.imprimir("\nFin del programa. === GestArcCon ===\n", color.fore["EXIT"])
 
 if __name__ == '__main__':
     main()
