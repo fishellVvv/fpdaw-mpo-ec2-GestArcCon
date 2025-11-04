@@ -48,11 +48,11 @@ def crear_archivo(nombre):
     # Crea un archivo de texto y permite escribir en él
     try:
         if len(nombre.split("/")) > 1:
-            raise ValueError("❌ Error: el nombre del archivo no puede ser una ruta\n") 
+            raise ValueError("❌ Error: el nombre del archivo no puede ser una ruta\n")
         ruta_archivo = os.path.join(ruta, nombre)
         open(ruta_archivo, "x")
 
-        contenido = io.leer_string(f"\nEscribe en {nombre}: ", color.fore["INPUT"]).strip()
+        contenido = io.leer_string(f"\nEscribe en {nombre}:\n", color.fore["INPUT"]).strip()
         with open(ruta_archivo, "w") as archivo:
             archivo.write(contenido)
 
@@ -63,9 +63,21 @@ def crear_archivo(nombre):
 
 def escribir_en_archivo(nombre):
     # Abre un archivo existente y añade texto al final
-    
-    log.registrar_com("escribir_en_archivo", nombre)
-    io.imprimir("escribir_en_archivo()\n")
+    try:
+        if len(nombre.split("/")) > 1:
+            raise ValueError("❌ Error: el nombre del archivo no puede ser una ruta\n")
+        if nombre.split(".")[-1] != "txt":
+            raise ValueError("❌ Error: el archivo debe ser .txt\n")
+        ruta_archivo = os.path.join(ruta, nombre)
+
+        contenido = io.leer_string(f"\nEscribe en {nombre}:\n", color.fore["INPUT"]).strip()
+        with open(ruta_archivo, "a") as archivo:
+            archivo.write(f"\n{contenido}")
+
+        log.registrar_com("escribir_en_archivo", nombre)
+        return f"✅ Archivo '{nombre}' modificado con exito.\n"
+    except FileNotFoundError:
+        raise FileNotFoundError(f"❌ Error: el archivo '{nombre}' no existe\n")
 
 def eliminar_elemento(nombre):
     # Elimina un archivo o carpeta
@@ -97,6 +109,7 @@ def main():
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
                 io.pulsa_enter()
+
             case 2:
                 try:
                     nombre = io.leer_string("\nIndica el nombre del nuevo directorio: ", color.fore["INPUT"]).strip()
@@ -104,6 +117,7 @@ def main():
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
                 io.pulsa_enter()
+
             case 3:
                 try:
                     nombre = io.leer_string("\nIndica el nombre del nuevo archivo: ", color.fore["INPUT"]).strip() + ".txt"
@@ -111,27 +125,33 @@ def main():
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
                 io.pulsa_enter()
+
             case 4:
                 try:
+                    nombre = io.leer_string("\nIndica el nombre del archivo: ", color.fore["INPUT"]).strip()
                     io.imprimir(escribir_en_archivo(nombre), color.fore["SUCCESS"])
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
                 io.pulsa_enter()
+
             case 5:
                 try:
                     io.imprimir(eliminar_elemento(nombre), color.fore["SUCCESS"])
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
                 io.pulsa_enter()
+
             case 6:
                 try:
                     io.imprimir(mostrar_informacion(nombre), color.fore["SUCCESS"])
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
                 io.pulsa_enter()
+
             case 7:
                 io.imprimir("\nSaliendo...", color.fore["EXIT"])
                 break
+
             case _:
                 io.imprimir("❌ Error: introduce un número del 1 al 7.\n", color.fore["ERROR"])
                 io.pulsa_enter()
