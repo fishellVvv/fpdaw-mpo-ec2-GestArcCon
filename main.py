@@ -59,10 +59,10 @@ def listar_contenido(rutaInt):
 def crear_directorio(nombre):
     # Crea una nueva carpeta
     try:
-        ruta_dir = os.path.join(ruta, nombre)
-        os.mkdir(ruta_dir)
+        rutaDir = os.path.join(ruta, nombre)
+        os.mkdir(rutaDir)
 
-        log.registrar_com("crear_directorio", ruta_dir)
+        log.registrar_com("crear_directorio", rutaDir)
         return f"✅ Directorio '{nombre}' creado con exito.\n"
     except FileExistsError:
         raise FileExistsError(f"❌ Error: el directorio '{nombre}' ya existe\n")
@@ -72,11 +72,10 @@ def crear_archivo(nombre):
     try:
         if len(nombre.split("/")) > 1:
             raise ValueError("❌ Error: el nombre del archivo no puede ser una ruta\n")
-        ruta_archivo = os.path.join(ruta, nombre)
-        open(ruta_archivo, "x")
+        rutaArc = os.path.join(ruta, nombre)
 
         contenido = io.leer_string(f"\nEscribe en {nombre}:\n", color.fore["INPUT"]).strip()
-        with open(ruta_archivo, "w") as archivo:
+        with open(rutaArc, "x", encoding="utf-8") as archivo:
             archivo.write(contenido)
 
         log.registrar_com("crear_archivo", nombre)
@@ -91,10 +90,10 @@ def escribir_en_archivo(nombre):
             raise ValueError("❌ Error: el nombre del archivo no puede ser una ruta\n")
         if nombre.split(".")[-1] != "txt":
             raise ValueError("❌ Error: el archivo debe ser .txt\n")
-        ruta_archivo = os.path.join(ruta, nombre)
+        rutaArc = os.path.join(ruta, nombre)
 
         contenido = io.leer_string(f"\nEscribe en {nombre}:\n", color.fore["INPUT"]).strip()
-        with open(ruta_archivo, "a") as archivo:
+        with open(rutaArc, "a", encoding="utf-8") as archivo:
             archivo.write(f"\n{contenido}")
 
         log.registrar_com("escribir_en_archivo", nombre)
@@ -107,17 +106,21 @@ def eliminar_elemento(nombre):
     try:
         if nombre.split(".")[-1] == "py":
             raise ValueError("❌ Error: por seguridad no se permite eliminar archivos .py\n")
-        ruta_elemento = os.path.join(ruta, nombre)
+        rutaElem = os.path.join(ruta, nombre)
 
         confirmacion = io.leer_string(f"\nConfirmar eliminación de {nombre} (S/N): ", color.fore["INPUT"]).strip()
         if confirmacion.lower() != "s":
             return f"Eliminación de '{nombre}' cancelada.\n"
         
-        if os.path.isdir(ruta_elemento):
-            os.rmdir(ruta_elemento)
+        if os.path.isdir(rutaElem):
+            try:
+                os.rmdir(rutaElem)
+            except OSError:
+                raise OSError("❌ Error: el directorio no está vacío\n")
+            
             mensaje = f"✅ Directorio '{nombre}' eliminado con éxito.\n"
         else:
-            os.remove(ruta_elemento)
+            os.remove(rutaElem)
             mensaje = f"✅ Archivo '{nombre}' eliminado con éxito.\n"
 
         log.registrar_com("eliminar_elemento", nombre)
@@ -128,18 +131,18 @@ def eliminar_elemento(nombre):
 def mostrar_informacion(nombre):
     # Muestra tamaño y fecha de modificación
     try:
-        ruta_elemento = os.path.join(ruta, nombre)
-        elemento_stat = os.stat(ruta_elemento)
+        rutaElem = os.path.join(ruta, nombre)
+        elemStat = os.stat(rutaElem)
 
-        if os.path.isdir(ruta_elemento):
-            tamanio, numeroArchivos = io.tamanio_recursivo(ruta_elemento)
-            fecha_mod = datetime.fromtimestamp(elemento_stat.st_mtime).isoformat(timespec="seconds")
+        if os.path.isdir(rutaElem):
+            tamanio, numeroArchivos = io.tamanio_recursivo(rutaElem)
+            fecha_mod = datetime.fromtimestamp(elemStat.st_mtime).isoformat(timespec="seconds")
             mensaje = f"Nombre: '{nombre}' | Tipo: directorio | Tamaño del contenido: {tamanio} bytes ({numeroArchivos} archivos) | Fecha de modificación: {fecha_mod} \n"
         else:
             extension = io.obtener_extension(ruta, nombre)
-            tamanio = elemento_stat.st_size
-            fecha_mod = datetime.fromtimestamp(elemento_stat.st_mtime).isoformat(timespec="seconds")
-            mensaje = f"Nombre: '{nombre}' | Tipo: archivo ({extension}) | Tamaño: {tamanio} bytes | Fecha de modificación: {fecha_mod} \n"
+            tamanio = elemStat.st_size
+            fechaMod = datetime.fromtimestamp(elemStat.st_mtime).isoformat(timespec="seconds")
+            mensaje = f"Nombre: '{nombre}' | Tipo: archivo ({extension}) | Tamaño: {tamanio} bytes | Fecha de modificación: {fechaMod} \n"
 
         log.registrar_com("mostrar_informacion", nombre)
         io.imprimir(mensaje, color.fore["INFO"])
@@ -201,7 +204,7 @@ def main():
 
             case 6:
                 try:
-                    nombre = io.leer_string("\nIndica el nombre del archivo (con extensión): ", color.fore["INPUT"]).strip()
+                    nombre = io.leer_string("\nIndica el nombre del directorio o archivo (con extensión): ", color.fore["INPUT"]).strip()
                     mostrar_informacion(nombre)
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
