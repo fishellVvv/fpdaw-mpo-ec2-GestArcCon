@@ -81,9 +81,26 @@ def escribir_en_archivo(nombre):
 
 def eliminar_elemento(nombre):
     # Elimina un archivo o carpeta
-    
-    log.registrar_com("eliminar_elemento", nombre)
-    io.imprimir("eliminar_elemento()\n")
+    try:
+        if nombre.split(".")[-1] == "py":
+            raise ValueError("❌ Error: por seguridad no se permite eliminar archivos .py\n")
+        ruta_elemento = os.path.join(ruta, nombre)
+
+        confirmacion = io.leer_string(f"\nConfirmar eliminación de {nombre} (S/N): ", color.fore["INPUT"]).strip()
+        if confirmacion.lower() != "s":
+            return f"Eliminación de '{nombre}' cancelada.\n"
+        
+        if os.path.isdir(ruta_elemento):
+            os.rmdir(ruta_elemento)                # solo si está vacío
+            mensaje = f"✅ Directorio '{nombre}' eliminado con éxito.\n"
+        else:
+            os.remove(ruta_elemento)
+            mensaje = f"✅ Archivo '{nombre}' eliminado con éxito.\n"
+
+        log.registrar_com("eliminar_elemento", nombre)
+        return mensaje
+    except FileNotFoundError:
+        raise FileNotFoundError(f"❌ Error: el archivo o directorio '{nombre}' no existe\n")
 
 def mostrar_informacion(nombre):
     # Muestra tamaño y fecha de modificación
@@ -120,7 +137,7 @@ def main():
 
             case 3:
                 try:
-                    nombre = io.leer_string("\nIndica el nombre del nuevo archivo: ", color.fore["INPUT"]).strip() + ".txt"
+                    nombre = io.leer_string("\nIndica el nombre del nuevo archivo (sin extensión): ", color.fore["INPUT"]).strip() + ".txt"
                     io.imprimir(crear_archivo(nombre), color.fore["SUCCESS"])
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
@@ -128,7 +145,7 @@ def main():
 
             case 4:
                 try:
-                    nombre = io.leer_string("\nIndica el nombre del archivo: ", color.fore["INPUT"]).strip()
+                    nombre = io.leer_string("\nIndica el nombre del archivo (con extensión .txt): ", color.fore["INPUT"]).strip()
                     io.imprimir(escribir_en_archivo(nombre), color.fore["SUCCESS"])
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
@@ -136,6 +153,7 @@ def main():
 
             case 5:
                 try:
+                    nombre = io.leer_string("\nIndica el nombre del directorio o archivo (con extensión): ", color.fore["INPUT"]).strip()
                     io.imprimir(eliminar_elemento(nombre), color.fore["SUCCESS"])
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
@@ -143,6 +161,7 @@ def main():
 
             case 6:
                 try:
+                    nombre = io.leer_string("\nIndica el nombre del archivo (con extensión): ", color.fore["INPUT"]).strip()
                     io.imprimir(mostrar_informacion(nombre), color.fore["SUCCESS"])
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
