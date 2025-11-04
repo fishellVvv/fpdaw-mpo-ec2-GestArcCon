@@ -1,4 +1,5 @@
 from colorama import Style
+from pathlib import Path
 import os
 
 ''' funciones output '''
@@ -30,16 +31,12 @@ def leer_entero(mensaje = "Introduce un número entero: ", color = None):
         imprimir(mensaje, color)
         entero = int(input())
     except ValueError:
-        raise ValueError
+        raise ValueError("Entrada no numérica")
     return entero
 
 def leer_string(mensaje = "Introduce un texto: ", color = None):
     imprimir(mensaje, color)
     return input()
-
-def leer_string_en_lista(mensaje = "Introduce un texto: ", color = None):
-    imprimir(mensaje, color)
-    return input().split(" ")
 
 ''' otras funciones '''
 
@@ -56,3 +53,9 @@ def obtener_extension(ruta, archivo):
         return "file"
     else:
         return "." + archivo.split(".")[-1]
+
+def ruta_actual(rutaBase):
+    rutaRel = os.path.relpath(Path.cwd(), start=rutaBase)
+    if rutaRel == ".":
+        return "./"
+    return f"./{Path(rutaRel).as_posix().strip('/')}/"

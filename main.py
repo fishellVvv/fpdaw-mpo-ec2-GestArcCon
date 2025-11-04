@@ -1,7 +1,9 @@
 from utils import color, io, log
+from pathlib import Path
 import os
 
-ruta = "./"
+rutaBase = Path.cwd()
+ruta = io.ruta_actual(rutaBase)
 
 def mostrar_menu():
     # Muestra las opciones disponibles
@@ -17,49 +19,43 @@ def mostrar_menu():
     color.fore["MENU"])
     io.imprimir(f"Ruta actual: {ruta}\n", color.fore["PATH"])
 
-def listar_contenido():
+def listar_contenido(rutaInt):
     # Lista archivos y carpetas del directorio actual
     try:
-        archivos = os.listdir(ruta)
+        archivos = os.listdir(rutaInt)
         print()
         for archivo in archivos:
-            io.imprimir(archivo, color.colorear(io.obtener_extension(ruta, archivo)))
+            io.imprimir(archivo, color.colorear(io.obtener_extension(rutaInt, archivo)))
             print()
     except FileNotFoundError:
-        io.imprimir(f"❌ Error: la ruta {ruta} no existe\n", color.fore["ERROR"])
+        raise FileNotFoundError(f"❌ Error: la ruta {rutaInt} no existe\n")
 
-    log.registrar_com("listar_contenido", ruta)
-    io.pulsa_enter()
-
-def crear_directorio():
+def crear_directorio(rutaInt):
     # Crea una nueva carpeta
-    io.imprimir("crear_directorio()\n")
-    log.registrar_com("crear_directorio", ruta)
-    io.pulsa_enter()
+    nombre = io.leer_string("\nIndica el nombre de la nueva carpeta: ", color.fore["INPUT"]).strip()
+    try:
+        os.mkdir(os.path.join(rutaInt, nombre))
+        mensaje = f"✅ Carpeta {nombre} creada con exito.\n"
+        mColor = color.fore["SUCCESS"]
+        return mensaje, mColor
+    except FileExistsError:
+        raise FileExistsError(f"❌ Error: la carpeta {nombre} ya existe\n")
 
 def crear_archivo():
     # Crea un archivo de texto y permite escribir en él
     io.imprimir("crear_archivo()\n")
-    log.registrar_com("crear_archivo", ruta)
-    io.pulsa_enter()
 
 def escribir_en_archivo():
     # Abre un archivo existente y añade texto al final
     io.imprimir("escribir_en_archivo()\n")
-    log.registrar_com("escribir_en_archivo", ruta)
-    io.pulsa_enter()
 
 def eliminar_elemento():
     # Elimina un archivo o carpeta
     io.imprimir("eliminar_elemento()\n")
-    log.registrar_com("eliminar_elemento", ruta)
-    io.pulsa_enter()
 
 def mostrar_informacion():
     # Muestra tamaño y fecha de modificación
     io.imprimir("mostrar_informacion()\n")
-    log.registrar_com("mostrar_informacion", ruta)
-    io.pulsa_enter()
 
 def main():
     # Bucle principal del programa
@@ -74,17 +70,42 @@ def main():
 
         match opcion:
             case 1:
-                listar_contenido()
+                try:
+                    listar_contenido(ruta)
+                except Exception as e:
+                    io.imprimir(str(e), color.fore["ERROR"])
+                
+                log.registrar_com("listar_contenido", ruta)
+                io.pulsa_enter()
             case 2:
-                crear_directorio()
+                try:
+                    mensaje, mColor = crear_directorio(ruta)
+                    io.imprimir(mensaje, mColor)
+                except Exception as e:
+                    io.imprimir(str(e), color.fore["ERROR"])
+                
+                log.registrar_com("crear_directorio", ruta)
+                io.pulsa_enter()
             case 3:
                 crear_archivo()
+
+                log.registrar_com("crear_archivo", ruta)
+                io.pulsa_enter()
             case 4:
                 escribir_en_archivo()
+
+                log.registrar_com("escribir_en_archivo", ruta)
+                io.pulsa_enter()
             case 5:
                 eliminar_elemento()
+
+                log.registrar_com("eliminar_elemento", ruta)
+                io.pulsa_enter()
             case 6:
                 mostrar_informacion()
+
+                log.registrar_com("mostrar_informacion", ruta)
+                io.pulsa_enter()
             case 7:
                 io.imprimir("\nSaliendo...", color.fore["EXIT"])
                 break

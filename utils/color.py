@@ -4,7 +4,7 @@ from colorama import Fore
 
 fore = {
     "MENU": Fore.BLUE,
-    "PATH": Fore.LIGHTCYAN_EX,
+    "PATH": Fore.LIGHTBLACK_EX,
     "EXIT": Fore.RED,
     "SUCCESS": Fore.LIGHTGREEN_EX,
     "ERROR": Fore.LIGHTRED_EX,
@@ -14,11 +14,11 @@ fore = {
 
 def colorear(extension):
     if extension == "dir":
-        return Fore.MAGENTA
+        return Fore.GREEN
     elif extension == ".txt":
         return Fore.BLUE
     elif extension in [".jpg", ".png"]:
-        return Fore.GREEN
+        return Fore.MAGENTA
     elif extension in [".mp3", ".wav"]:
         return Fore.YELLOW
     else:
