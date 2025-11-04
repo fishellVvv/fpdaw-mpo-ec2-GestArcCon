@@ -22,11 +22,17 @@ def mostrar_menu():
 def listar_contenido(rutaInt):
     # Lista archivos y carpetas del directorio actual
     try:
-        archivos = os.listdir(rutaInt)
+        contenido = os.listdir(rutaInt)
 
         print()
-        for archivo in archivos:
-            io.imprimir(archivo, color.colorear(io.obtener_extension(rutaInt, archivo)))
+        for elemento in contenido:
+            if io.obtener_extension(rutaInt, elemento) != "dir":
+                tipo = "archivo"
+            else: 
+                tipo = "carpeta"
+
+            mensaje = f"{elemento} ({tipo})"
+            io.imprimir(mensaje, color.colorear(io.obtener_extension(rutaInt, elemento)))
             print()
 
         log.registrar_com("listar_contenido", rutaInt)
@@ -109,7 +115,7 @@ def mostrar_informacion(nombre):
         elemento_stat = os.stat(ruta_elemento)
 
         if os.path.isdir(ruta_elemento):
-            tamanio, numeroArchivos = io.tamano_recursivo(ruta_elemento)
+            tamanio, numeroArchivos = io.tamanio_recursivo(ruta_elemento)
             fecha_mod = datetime.fromtimestamp(elemento_stat.st_mtime).isoformat(timespec="seconds")
             mensaje = f"Nombre: '{nombre}' | Tipo: directorio | Tamaño del contenido: {tamanio} bytes ({numeroArchivos} archivos) | Fecha de modificación: {fecha_mod} \n"
         else:
@@ -127,7 +133,7 @@ def main():
     # Bucle principal del programa
     while True:
         mostrar_menu()
-        tamanioRutaActual, numeroArchivosRutaActual = io.tamano_recursivo(ruta)
+        tamanioRutaActual, numeroArchivosRutaActual = io.tamanio_recursivo(ruta)
         io.imprimir(f"Ruta actual: {ruta}    [{tamanioRutaActual} bytes ({numeroArchivosRutaActual} archivos)]\n", color.fore["PATH"])
         try:
             opcion = io.leer_entero("Selecciona una opción: ", color.fore["INPUT"])

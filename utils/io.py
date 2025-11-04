@@ -60,21 +60,30 @@ def ruta_actual(rutaBase):
         return "./"
     return f"./{Path(rutaRel).as_posix().strip('/')}/"
 
-def tamano_recursivo(ruta_dir):
+def tamanio_recursivo(rutaDir):
     tamanioTotal = 0
     numeroArchivos = 0
-    for root, dirs, files in os.walk(ruta_dir):
-        for nombre in files:
-            ruta = os.path.join(root, nombre)
+
+    contenido = os.listdir(rutaDir)
+    for elemento in contenido:
+
+        if os.path.isfile(elemento):
+            ruta = os.path.join(rutaDir, elemento)
             try:
                 tamanioTotal += os.stat(ruta).st_size
                 numeroArchivos += 1
             except (FileNotFoundError, PermissionError):
                 pass
-        for nombre in dirs:
-            ruta = os.path.join(root, nombre)
+
+        if os.path.isdir(elemento):
+            if elemento == ".git":
+                continue
+            ruta = os.path.join(rutaDir, elemento)
             try:
-                tamano_recursivo(ruta)
+                print(ruta)
+                tamTotDir, numArcDir = tamanio_recursivo(ruta)
+                tamanioTotal += tamTotDir
+                numeroArchivos += numArcDir
             except (FileNotFoundError, PermissionError):
                 pass
 
