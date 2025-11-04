@@ -24,8 +24,25 @@ def listar_contenido(rutaInt):
     try:
         contenido = os.listdir(rutaInt)
 
+        carpetas = []
+        archivos = []
+
+        for nombre in contenido:
+            if nombre == ".git":      # opcional
+                continue
+            ruta = os.path.join(rutaInt, nombre)
+
+            if os.path.isdir(ruta):
+                carpetas.append(nombre)
+            else:
+                archivos.append(nombre)
+
+        carpetas.sort()
+        archivos.sort()
+
         print()
-        for elemento in contenido:
+        for elemento in carpetas + archivos:
+
             if io.obtener_extension(rutaInt, elemento) != "dir":
                 tipo = "archivo"
             else: 

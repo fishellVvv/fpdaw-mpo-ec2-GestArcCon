@@ -66,21 +66,19 @@ def tamanio_recursivo(rutaDir):
 
     contenido = os.listdir(rutaDir)
     for elemento in contenido:
+        if elemento == ".git":
+                continue
+        ruta = os.path.join(rutaDir, elemento)
 
-        if os.path.isfile(elemento):
-            ruta = os.path.join(rutaDir, elemento)
+        if os.path.isfile(ruta):
             try:
                 tamanioTotal += os.stat(ruta).st_size
                 numeroArchivos += 1
             except (FileNotFoundError, PermissionError):
                 pass
 
-        if os.path.isdir(elemento):
-            if elemento == ".git":
-                continue
-            ruta = os.path.join(rutaDir, elemento)
+        if os.path.isdir(ruta):
             try:
-                print(ruta)
                 tamTotDir, numArcDir = tamanio_recursivo(ruta)
                 tamanioTotal += tamTotDir
                 numeroArchivos += numArcDir
