@@ -23,38 +23,60 @@ def listar_contenido(rutaInt):
     # Lista archivos y carpetas del directorio actual
     try:
         archivos = os.listdir(rutaInt)
+
         print()
         for archivo in archivos:
             io.imprimir(archivo, color.colorear(io.obtener_extension(rutaInt, archivo)))
             print()
+
+        log.registrar_com("listar_contenido", rutaInt)
     except FileNotFoundError:
-        raise FileNotFoundError(f"❌ Error: la ruta {rutaInt} no existe\n")
+        raise FileNotFoundError(f"❌ Error: la ruta '{rutaInt}' no existe\n")
 
-def crear_directorio(rutaInt):
+def crear_directorio(nombre):
     # Crea una nueva carpeta
-    nombre = io.leer_string("\nIndica el nombre de la nueva carpeta: ", color.fore["INPUT"]).strip()
     try:
-        os.mkdir(os.path.join(rutaInt, nombre))
-        mensaje = f"✅ Carpeta {nombre} creada con exito.\n"
-        mColor = color.fore["SUCCESS"]
-        return mensaje, mColor
+        ruta_dir = os.path.join(ruta, nombre)
+        os.mkdir(ruta_dir)
+
+        log.registrar_com("crear_directorio", ruta_dir)
+        return f"✅ Directorio '{nombre}' creado con exito.\n"
     except FileExistsError:
-        raise FileExistsError(f"❌ Error: la carpeta {nombre} ya existe\n")
+        raise FileExistsError(f"❌ Error: el directorio '{nombre}' ya existe\n")
 
-def crear_archivo():
+def crear_archivo(nombre):
     # Crea un archivo de texto y permite escribir en él
-    io.imprimir("crear_archivo()\n")
+    try:
+        if len(nombre.split("/")) > 1:
+            raise ValueError("❌ Error: el nombre del archivo no puede ser una ruta\n") 
+        ruta_archivo = os.path.join(ruta, nombre)
+        open(ruta_archivo, "x")
 
-def escribir_en_archivo():
+        contenido = io.leer_string(f"\nEscribe en {nombre}: ", color.fore["INPUT"]).strip()
+        with open(ruta_archivo, "w") as archivo:
+            archivo.write(contenido)
+
+        log.registrar_com("crear_archivo", nombre)
+        return f"✅ Archivo '{nombre}' creado con exito.\n"
+    except FileExistsError:
+        raise FileExistsError(f"❌ Error: el archivo '{nombre}' ya existe\n")
+
+def escribir_en_archivo(nombre):
     # Abre un archivo existente y añade texto al final
+    
+    log.registrar_com("escribir_en_archivo", nombre)
     io.imprimir("escribir_en_archivo()\n")
 
-def eliminar_elemento():
+def eliminar_elemento(nombre):
     # Elimina un archivo o carpeta
+    
+    log.registrar_com("eliminar_elemento", nombre)
     io.imprimir("eliminar_elemento()\n")
 
-def mostrar_informacion():
+def mostrar_informacion(nombre):
     # Muestra tamaño y fecha de modificación
+    
+    log.registrar_com("mostrar_informacion", nombre)
     io.imprimir("mostrar_informacion()\n")
 
 def main():
@@ -74,37 +96,38 @@ def main():
                     listar_contenido(ruta)
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
-                
-                log.registrar_com("listar_contenido", ruta)
                 io.pulsa_enter()
             case 2:
                 try:
-                    mensaje, mColor = crear_directorio(ruta)
-                    io.imprimir(mensaje, mColor)
+                    nombre = io.leer_string("\nIndica el nombre del nuevo directorio: ", color.fore["INPUT"]).strip()
+                    io.imprimir(crear_directorio(nombre), color.fore["SUCCESS"])
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
-                
-                log.registrar_com("crear_directorio", ruta)
                 io.pulsa_enter()
             case 3:
-                crear_archivo()
-
-                log.registrar_com("crear_archivo", ruta)
+                try:
+                    nombre = io.leer_string("\nIndica el nombre del nuevo archivo: ", color.fore["INPUT"]).strip() + ".txt"
+                    io.imprimir(crear_archivo(nombre), color.fore["SUCCESS"])
+                except Exception as e:
+                    io.imprimir(str(e), color.fore["ERROR"])
                 io.pulsa_enter()
             case 4:
-                escribir_en_archivo()
-
-                log.registrar_com("escribir_en_archivo", ruta)
+                try:
+                    io.imprimir(escribir_en_archivo(nombre), color.fore["SUCCESS"])
+                except Exception as e:
+                    io.imprimir(str(e), color.fore["ERROR"])
                 io.pulsa_enter()
             case 5:
-                eliminar_elemento()
-
-                log.registrar_com("eliminar_elemento", ruta)
+                try:
+                    io.imprimir(eliminar_elemento(nombre), color.fore["SUCCESS"])
+                except Exception as e:
+                    io.imprimir(str(e), color.fore["ERROR"])
                 io.pulsa_enter()
             case 6:
-                mostrar_informacion()
-
-                log.registrar_com("mostrar_informacion", ruta)
+                try:
+                    io.imprimir(mostrar_informacion(nombre), color.fore["SUCCESS"])
+                except Exception as e:
+                    io.imprimir(str(e), color.fore["ERROR"])
                 io.pulsa_enter()
             case 7:
                 io.imprimir("\nSaliendo...", color.fore["EXIT"])
