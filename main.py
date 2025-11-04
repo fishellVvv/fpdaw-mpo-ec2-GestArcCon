@@ -1,4 +1,5 @@
 from utils import color, io, log
+from datetime import datetime
 from pathlib import Path
 import os
 
@@ -17,7 +18,6 @@ def mostrar_menu():
 6. Mostrar información del archivo
 7. Salir""",
     color.fore["MENU"])
-    io.imprimir(f"Ruta actual: {ruta}\n", color.fore["PATH"])
 
 def listar_contenido(rutaInt):
     # Lista archivos y carpetas del directorio actual
@@ -91,7 +91,7 @@ def eliminar_elemento(nombre):
             return f"Eliminación de '{nombre}' cancelada.\n"
         
         if os.path.isdir(ruta_elemento):
-            os.rmdir(ruta_elemento)                # solo si está vacío
+            os.rmdir(ruta_elemento)
             mensaje = f"✅ Directorio '{nombre}' eliminado con éxito.\n"
         else:
             os.remove(ruta_elemento)
@@ -104,14 +104,31 @@ def eliminar_elemento(nombre):
 
 def mostrar_informacion(nombre):
     # Muestra tamaño y fecha de modificación
-    
-    log.registrar_com("mostrar_informacion", nombre)
-    io.imprimir("mostrar_informacion()\n")
+    try:
+        ruta_elemento = os.path.join(ruta, nombre)
+        elemento_stat = os.stat(ruta_elemento)
+
+        if os.path.isdir(ruta_elemento):
+            tamanio, numeroArchivos = io.tamano_recursivo(ruta_elemento)
+            fecha_mod = datetime.fromtimestamp(elemento_stat.st_mtime).isoformat(timespec="seconds")
+            mensaje = f"Nombre: '{nombre}' | Tipo: directorio | Tamaño del contenido: {tamanio} bytes ({numeroArchivos} archivos) | Fecha de modificación: {fecha_mod} \n"
+        else:
+            extension = io.obtener_extension(ruta, nombre)
+            tamanio = elemento_stat.st_size
+            fecha_mod = datetime.fromtimestamp(elemento_stat.st_mtime).isoformat(timespec="seconds")
+            mensaje = f"Nombre: '{nombre}' | Tipo: archivo ({extension}) | Tamaño: {tamanio} bytes | Fecha de modificación: {fecha_mod} \n"
+
+        log.registrar_com("mostrar_informacion", nombre)
+        io.imprimir(mensaje, color.fore["INFO"])
+    except FileNotFoundError:
+        raise FileNotFoundError(f"❌ Error: el archivo o directorio '{nombre}' no existe\n")
 
 def main():
     # Bucle principal del programa
     while True:
         mostrar_menu()
+        tamanioRutaActual, numeroArchivosRutaActual = io.tamano_recursivo(ruta)
+        io.imprimir(f"Ruta actual: {ruta}    [{tamanioRutaActual} bytes ({numeroArchivosRutaActual} archivos)]\n", color.fore["PATH"])
         try:
             opcion = io.leer_entero("Selecciona una opción: ", color.fore["INPUT"])
         except ValueError:
@@ -162,7 +179,7 @@ def main():
             case 6:
                 try:
                     nombre = io.leer_string("\nIndica el nombre del archivo (con extensión): ", color.fore["INPUT"]).strip()
-                    io.imprimir(mostrar_informacion(nombre), color.fore["SUCCESS"])
+                    mostrar_informacion(nombre)
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
                 io.pulsa_enter()

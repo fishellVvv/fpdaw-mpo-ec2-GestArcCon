@@ -59,3 +59,23 @@ def ruta_actual(rutaBase):
     if rutaRel == ".":
         return "./"
     return f"./{Path(rutaRel).as_posix().strip('/')}/"
+
+def tamano_recursivo(ruta_dir):
+    tamanioTotal = 0
+    numeroArchivos = 0
+    for root, dirs, files in os.walk(ruta_dir):
+        for nombre in files:
+            ruta = os.path.join(root, nombre)
+            try:
+                tamanioTotal += os.stat(ruta).st_size
+                numeroArchivos += 1
+            except (FileNotFoundError, PermissionError):
+                pass
+        for nombre in dirs:
+            ruta = os.path.join(root, nombre)
+            try:
+                tamano_recursivo(ruta)
+            except (FileNotFoundError, PermissionError):
+                pass
+
+    return tamanioTotal, numeroArchivos
