@@ -47,7 +47,8 @@ def pulsa_enter(color = None):
         input("\nPulsa enter para continuar...")
 
 def obtener_extension(ruta, archivo):
-    if os.path.isdir(ruta+archivo):
+    rutaArc = os.path.join(ruta, archivo)
+    if os.path.isdir(rutaArc):
         return "dir"
     elif len(archivo.split(".")) == 1:
         return "file"
