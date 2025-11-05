@@ -63,7 +63,7 @@ def crear_directorio(nombre):
         os.mkdir(rutaDir)
 
         log.registrar_com("crear_directorio", rutaDir)
-        return f"✅ Directorio '{nombre}' creado con exito.\n"
+        return f"✅ Directorio '{nombre}' creado con éxito.\n"
     except FileExistsError:
         raise FileExistsError(f"❌ Error: el directorio '{nombre}' ya existe\n")
 
@@ -79,7 +79,7 @@ def crear_archivo(nombre):
             archivo.write(contenido)
 
         log.registrar_com("crear_archivo", nombre)
-        return f"✅ Archivo '{nombre}' creado con exito.\n"
+        return f"✅ Archivo '{nombre}' creado con éxito.\n"
     except FileExistsError:
         raise FileExistsError(f"❌ Error: el archivo '{nombre}' ya existe\n")
 
@@ -97,7 +97,7 @@ def escribir_en_archivo(nombre):
             archivo.write(f"\n{contenido}")
 
         log.registrar_com("escribir_en_archivo", nombre)
-        return f"✅ Archivo '{nombre}' modificado con exito.\n"
+        return f"✅ Archivo '{nombre}' modificado con éxito.\n"
     except FileNotFoundError:
         raise FileNotFoundError(f"❌ Error: el archivo '{nombre}' no existe\n")
 
