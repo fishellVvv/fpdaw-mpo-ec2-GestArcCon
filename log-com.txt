@@ -9,3 +9,36 @@
 2025-11-05T09:37:42 | crear_archivo | hola.txt
 2025-11-05T09:38:32 | renombrar_elemento | holaRenombrado.txt
 2025-11-05T09:38:42 | CIERRE | GestArcCon
+2025-11-05T10:37:54 | INICIO | GestArcCon
+2025-11-05T10:38:06 | listar_contenido | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon
+2025-11-05T10:38:23 | crear_directorio | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\prueba
+2025-11-05T10:39:26 | renombrar_elemento | prueba2
+2025-11-05T10:39:45 | CIERRE | GestArcCon
+2025-11-05T10:43:54 | INICIO | GestArcCon
+2025-11-05T10:50:09 | INICIO | GestArcCon
+2025-11-05T10:53:39 | CIERRE | GestArcCon
+2025-11-05T10:53:45 | INICIO | GestArcCon
+2025-11-05T10:54:31 | listar_contenido | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas
+2025-11-05T10:54:49 | CIERRE | GestArcCon
+2025-11-05T11:02:00 | INICIO | GestArcCon
+2025-11-05T11:02:03 | listar_contenido | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas
+2025-11-05T11:05:32 | INICIO | GestArcCon
+2025-11-05T11:21:43 | CIERRE | GestArcCon
+2025-11-05T11:21:54 | INICIO | GestArcCon
+2025-11-05T11:22:15 | INICIO | GestArcCon
+2025-11-05T11:22:35 | CIERRE | GestArcCon
+2025-11-05T11:22:40 | INICIO | GestArcCon
+2025-11-05T11:23:18 | listar_contenido | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas
+2025-11-05T11:24:16 | crear_directorio | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\carpetaPrueba
+2025-11-05T11:24:26 | CIERRE | GestArcCon
+2025-11-05T11:27:46 | INICIO | GestArcCon
+2025-11-05T11:29:23 | CIERRE | GestArcCon
+2025-11-05T11:31:01 | INICIO | GestArcCon
+2025-11-05T11:31:46 | CIERRE | GestArcCon
+2025-11-05T11:31:51 | INICIO | GestArcCon
+2025-11-05T11:32:06 | CIERRE | GestArcCon
+2025-11-05T11:33:39 | INICIO | GestArcCon
+2025-11-05T11:34:17 | crear_archivo | archivoPrueba.txt
+2025-11-05T11:34:59 | listar_contenido | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas
+2025-11-05T11:35:26 | mostrar_informacion | carpetaPrueba
+2025-11-05T11:35:56 | CIERRE | GestArcCon

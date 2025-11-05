@@ -1,5 +1,5 @@
+from utils import color
 from colorama import Style
-from pathlib import Path
 import os
 
 ''' funciones output '''
@@ -55,12 +55,6 @@ def obtener_extension(ruta, archivo):
     else:
         return "." + archivo.split(".")[-1]
 
-def ruta_actual(rutaBase):
-    rutaRel = os.path.relpath(Path.cwd(), start=rutaBase)
-    if rutaRel == ".":
-        return "./"
-    return f"./{Path(rutaRel).as_posix().strip('/')}/"
-
 def tamanio_recursivo(rutaDir):
     tamanioTotal = 0
     numeroArchivos = 0
@@ -87,3 +81,14 @@ def tamanio_recursivo(rutaDir):
                 pass
 
     return tamanioTotal, numeroArchivos
+
+def mostrar_ruta_actual(ruta):
+    tamanioRutaActual, numeroArchivosRutaActual = tamanio_recursivo(ruta)
+
+    pasosRuta = ruta.split("\\")
+    if len(pasosRuta) > 3:
+        ruta = f"{pasosRuta[0]}\\...\\{pasosRuta[-2]}\\{pasosRuta[-1]}"
+    
+    imprimir("Ruta actual: ", color.fore["PATH"])
+    imprimir(f"{ruta}")
+    imprimir(f" [{tamanioRutaActual} bytes ({numeroArchivosRutaActual} archivos)]\n", color.fore["PATH"])

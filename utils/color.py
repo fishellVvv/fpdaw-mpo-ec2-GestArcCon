@@ -10,7 +10,6 @@ fore = {
     "SUCCESS": Fore.LIGHTGREEN_EX,
     "ERROR": Fore.LIGHTRED_EX,
     "INPUT": Fore.LIGHTYELLOW_EX,
-    "CONTINUE": Fore.LIGHTWHITE_EX
 }
 
 def colorear(extension):

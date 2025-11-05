@@ -1,14 +1,13 @@
 from utils import color, io, log
 from datetime import datetime
-from pathlib import Path
 import os
 
-rutaBase = Path.cwd()
-ruta = io.ruta_actual(rutaBase)
+rutaBase = os.path.join(os.getcwd(), "pruebas")
+ruta = rutaBase
 
 def mostrar_menu():
     # Muestra las opciones disponibles
-    io.imp_marco("""   === GestArcCon ===
+    io.imp_marco("""           === GestArcCon ===
                  
 1. Listar contenido del directorio actual
 2. Crear un nuevo directorio
@@ -42,6 +41,9 @@ def listar_contenido(rutaInt):
         carpetas.sort()
         archivos.sort()
 
+        if len(carpetas + archivos) == 0:
+            io.imprimir("El directorio está vacío.")
+
         print()
         for elemento in carpetas + archivos:
 
@@ -56,7 +58,7 @@ def listar_contenido(rutaInt):
 
         log.registrar_com("listar_contenido", rutaInt)
     except FileNotFoundError:
-        raise FileNotFoundError(f"❌ Error: la ruta '{rutaInt}' no existe\n")
+        raise FileNotFoundError(f"Error: la ruta '{rutaInt}' no existe\n")
 
 def crear_directorio(nombre):
     # Crea una nueva carpeta
@@ -65,15 +67,15 @@ def crear_directorio(nombre):
         os.mkdir(rutaDir)
 
         log.registrar_com("crear_directorio", rutaDir)
-        return f"✅ Directorio '{nombre}' creado con éxito.\n"
+        return f"Directorio '{nombre}' creado con éxito.\n"
     except FileExistsError:
-        raise FileExistsError(f"❌ Error: el directorio '{nombre}' ya existe\n")
+        raise FileExistsError(f"Error: el directorio '{nombre}' ya existe\n")
 
 def crear_archivo(nombre):
     # Crea un archivo de texto y permite escribir en él
     try:
         if len(nombre.split("/")) > 1:
-            raise ValueError("❌ Error: el nombre del archivo no puede ser una ruta\n")
+            raise ValueError("Error: el nombre del archivo no puede ser una ruta\n")
         rutaArc = os.path.join(ruta, nombre)
 
         contenido = io.leer_string(f"\nEscribe en {nombre}:\n", color.fore["INPUT"]).strip()
@@ -81,17 +83,17 @@ def crear_archivo(nombre):
             archivo.write(contenido)
 
         log.registrar_com("crear_archivo", nombre)
-        return f"✅ Archivo '{nombre}' creado con éxito.\n"
+        return f"Archivo '{nombre}' creado con éxito.\n"
     except FileExistsError:
-        raise FileExistsError(f"❌ Error: el archivo '{nombre}' ya existe\n")
+        raise FileExistsError(f"Error: el archivo '{nombre}' ya existe\n")
 
 def escribir_en_archivo(nombre):
     # Abre un archivo existente y añade texto al final
     try:
         if len(nombre.split("/")) > 1:
-            raise ValueError("❌ Error: el nombre del archivo no puede ser una ruta\n")
+            raise ValueError("Error: el nombre del archivo no puede ser una ruta\n")
         if nombre.split(".")[-1] != "txt":
-            raise ValueError("❌ Error: el archivo debe ser .txt\n")
+            raise ValueError("Error: el archivo debe ser .txt\n")
         rutaArc = os.path.join(ruta, nombre)
 
         contenido = io.leer_string(f"\nEscribe en {nombre}:\n", color.fore["INPUT"]).strip()
@@ -99,15 +101,15 @@ def escribir_en_archivo(nombre):
             archivo.write(f"\n{contenido}")
 
         log.registrar_com("escribir_en_archivo", nombre)
-        return f"✅ Archivo '{nombre}' modificado con éxito.\n"
+        return f"Archivo '{nombre}' modificado con éxito.\n"
     except FileNotFoundError:
-        raise FileNotFoundError(f"❌ Error: el archivo '{nombre}' no existe\n")
+        raise FileNotFoundError(f"Error: el archivo '{nombre}' no existe\n")
 
 def eliminar_elemento(nombre):
     # Elimina un archivo o carpeta
     try:
         if nombre.split(".")[-1] == "py":
-            raise ValueError("❌ Error: por seguridad no se permite eliminar archivos .py\n")
+            raise ValueError("Error: por seguridad no se permite eliminar archivos del programa\n")
         rutaElem = os.path.join(ruta, nombre)
 
         confirmacion = io.leer_string(f"\nConfirmar eliminación de {nombre} (S/N): ", color.fore["INPUT"]).strip()
@@ -118,17 +120,17 @@ def eliminar_elemento(nombre):
             try:
                 os.rmdir(rutaElem)
             except OSError:
-                raise OSError("❌ Error: el directorio no está vacío\n")
+                raise OSError("Error: el directorio no está vacío\n")
             
-            mensaje = f"✅ Directorio '{nombre}' eliminado con éxito.\n"
+            mensaje = f"Directorio '{nombre}' eliminado con éxito.\n"
         else:
             os.remove(rutaElem)
-            mensaje = f"✅ Archivo '{nombre}' eliminado con éxito.\n"
+            mensaje = f"Archivo '{nombre}' eliminado con éxito.\n"
 
         log.registrar_com("eliminar_elemento", nombre)
         return mensaje
     except FileNotFoundError:
-        raise FileNotFoundError(f"❌ Error: el archivo o directorio '{nombre}' no existe\n")
+        raise FileNotFoundError(f"Error: el archivo o directorio '{nombre}' no existe\n")
 
 def mostrar_informacion(nombre):
     # Muestra tamaño y fecha de modificación
@@ -149,13 +151,13 @@ def mostrar_informacion(nombre):
         log.registrar_com("mostrar_informacion", nombre)
         io.imprimir(mensaje, color.fore["INFO"])
     except FileNotFoundError:
-        raise FileNotFoundError(f"❌ Error: el archivo o directorio '{nombre}' no existe\n")
+        raise FileNotFoundError(f"Error: el archivo o directorio '{nombre}' no existe\n")
     
 def renombrar_elemento(nombre):
     # Renombra un archivo o carpeta
     try:
         if nombre.split(".")[-1] == "py" or nombre == "utils":
-            raise ValueError("❌ Error: por seguridad no se permite renombrar archivos del programa\n")
+            raise ValueError("Error: por seguridad no se permite renombrar archivos del programa\n")
         rutaElem = os.path.join(ruta, nombre)
 
         nuevoNombre = io.leer_string("\nIndica el nuevo nombre (con extensión si la tiene): ", color.fore["INPUT"]).strip()
@@ -164,9 +166,9 @@ def renombrar_elemento(nombre):
         os.rename(rutaElem, rutaNuevoElem)
 
         log.registrar_com("renombrar_elemento", nuevoNombre)
-        return f"✅ Elemento '{nuevoNombre}' renombrado con éxito.\n"
+        return f"Elemento '{nuevoNombre}' renombrado con éxito.\n"
     except FileNotFoundError:
-        raise FileNotFoundError(f"❌ Error: el archivo o directorio '{nombre}' no existe\n")
+        raise FileNotFoundError(f"Error: el archivo o directorio '{nombre}' no existe\n")
 
 def cambiar_ruta(ruta):
     # Navega hacia otra carpeta
@@ -178,12 +180,12 @@ def main():
 
     while True:
         mostrar_menu()
-        tamanioRutaActual, numeroArchivosRutaActual = io.tamanio_recursivo(ruta)
-        io.imprimir(f"Ruta actual: {ruta}    [{tamanioRutaActual} bytes ({numeroArchivosRutaActual} archivos)]\n", color.fore["PATH"])
+        io.mostrar_ruta_actual(ruta)
+
         try:
             opcion = io.leer_entero("\nSelecciona una opción: ", color.fore["INPUT"])
         except ValueError:
-            io.imprimir("❌ Error: introduce un número del 1 al 7.\n", color.fore["ERROR"])
+            io.imprimir("Error: introduce un número del 1 al 7.\n", color.fore["ERROR"])
             io.pulsa_enter()
             continue
 
@@ -256,7 +258,7 @@ def main():
                 break
 
             case _:
-                io.imprimir("❌ Error: introduce un número del 1 al 7.\n", color.fore["ERROR"])
+                io.imprimir("Error: introduce un número del 1 al 7.\n", color.fore["ERROR"])
                 io.pulsa_enter()
 
     io.imprimir("\nGracias por utilizar GestArcCon.\n\n", color.fore["EXIT"])
