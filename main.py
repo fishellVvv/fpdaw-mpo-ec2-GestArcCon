@@ -192,6 +192,8 @@ def renombrar_elemento(nombre):
         return f"Elemento '{nuevoNombre}' renombrado con éxito.\n"
     except FileNotFoundError:
         raise FileNotFoundError(f"Error: el archivo o directorio '{nombre}' no existe\n")
+    except FileExistsError:
+        raise FileExistsError("Error: ya existe un archivo o directorio con ese nombre\n")
     except PermissionError:
         raise PermissionError("Error: permisos insuficientes para la operación solicitada\n")
 
