@@ -42,3 +42,17 @@
 2025-11-05T11:34:59 | listar_contenido | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas
 2025-11-05T11:35:26 | mostrar_informacion | carpetaPrueba
 2025-11-05T11:35:56 | CIERRE | GestArcCon
+2025-11-05T13:14:07 | INICIO | GestArcCon
+2025-11-05T13:14:17 | CIERRE | GestArcCon
+2025-11-05T13:16:23 | INICIO | GestArcCon
+2025-11-05T13:16:38 | listar_contenido | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas
+2025-11-05T13:16:54 | crear_directorio | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\test
+2025-11-05T13:17:19 | crear_archivo | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\texto.txt
+2025-11-05T13:17:56 | escribir_en_archivo | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\texto.txt
+2025-11-05T13:18:12 | eliminar_elemento | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\test
+2025-11-05T13:18:32 | mostrar_informacion | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\texto.txt
+2025-11-05T13:19:00 | renombrar_elemento | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\otro.pdf
+2025-11-05T13:19:50 | cambiar_ruta | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\carpetaPrueba
+2025-11-05T13:20:08 | crear_archivo | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\carpetaPrueba\hola.txt
+2025-11-05T13:20:53 | cambiar_ruta | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas
+2025-11-05T13:21:18 | CIERRE | GestArcCon

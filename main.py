@@ -69,6 +69,8 @@ def listar_contenido(rutaInt):
 def crear_directorio(nombre):
     # Crea una nueva carpeta
     try:
+        if "/" in nombre or "\\" in nombre:
+            raise ValueError("Error: el nombre no puede ser una ruta\n")
         rutaDir = os.path.join(ruta, nombre)
         os.mkdir(rutaDir)
 
@@ -114,9 +116,14 @@ def escribir_en_archivo(nombre):
 def eliminar_elemento(nombre):
     # Elimina un archivo o carpeta
     try:
-        if nombre.split(".")[-1] == "py":
+        if "/" in nombre or "\\" in nombre:
+            raise ValueError("Error: el nombre no puede ser una ruta\n")
+        if nombre.split(".")[-1] == "py" or nombre == "utils":
             raise ValueError("Error: por seguridad no se permite eliminar archivos del programa\n")
         rutaElem = os.path.join(ruta, nombre)
+
+        if not os.path.exists(rutaElem):
+            raise FileNotFoundError(f"Error: el archivo o directorio '{nombre}' no existe\n")
 
         confirmacion = io.leer_string(f"\nConfirmar eliminación de {nombre} (S/N): ", color.fore["INPUT"]).strip()
         if confirmacion.lower() != "s":
@@ -141,6 +148,9 @@ def eliminar_elemento(nombre):
 def mostrar_informacion(nombre):
     # Muestra tamaño y fecha de modificación
     try:
+        if "/" in nombre or "\\" in nombre:
+            raise ValueError("Error: el nombre no puede ser una ruta\n")
+        
         rutaElem = os.path.join(ruta, nombre)
         elemStat = os.stat(rutaElem)
 
@@ -162,19 +172,24 @@ def mostrar_informacion(nombre):
 def renombrar_elemento(nombre):
     # Renombra un archivo o carpeta
     try:
+        if "/" in nombre or "\\" in nombre:
+            raise ValueError("Error: el nombre no puede ser una ruta\n")
         if nombre.split(".")[-1] == "py" or nombre == "utils":
             raise ValueError("Error: por seguridad no se permite renombrar archivos del programa\n")
         rutaElem = os.path.join(ruta, nombre)
 
         nuevoNombre = io.leer_string("\nIndica el nuevo nombre (con extensión si la tiene): ", color.fore["INPUT"]).strip()
+        if "/" in nuevoNombre or "\\" in nuevoNombre:
+            raise ValueError("Error: el nuevo nombre no puede ser una ruta\n")
         rutaNuevoElem = os.path.join(ruta, nuevoNombre)
+
+        if os.path.exists(rutaNuevoElem):
+            raise FileExistsError("Error: ya existe un archivo o directorio con ese nombre\n")
 
         os.rename(rutaElem, rutaNuevoElem)
 
         log.registrar_com("renombrar_elemento", rutaNuevoElem)
         return f"Elemento '{nuevoNombre}' renombrado con éxito.\n"
-    except FileExistsError:
-        raise FileExistsError("Error: ya existe un archivo o directorio con ese nombre\n")
     except FileNotFoundError:
         raise FileNotFoundError(f"Error: el archivo o directorio '{nombre}' no existe\n")
     except PermissionError:
@@ -194,7 +209,10 @@ def cambiar_ruta(nombre):
 
         if not os.path.isdir(rutaNueva):
             raise FileNotFoundError(f"Error: el directorio '{nombre}' no existe\n")
-        if os.path.commonpath([rutaBase, rutaNueva]) != rutaBase:
+        
+        base_real  = os.path.realpath(rutaBase)
+        nueva_real = os.path.realpath(rutaNueva)
+        if os.path.commonpath([base_real, nueva_real]) != base_real:
             raise PermissionError("Error: no se permite navegar fuera de la carpeta de trabajo\n")
 
         ruta = rutaNueva

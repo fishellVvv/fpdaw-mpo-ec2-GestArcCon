@@ -85,10 +85,10 @@ def tamanio_recursivo(rutaDir):
 def mostrar_ruta_actual(ruta):
     tamanioRutaActual, numeroArchivosRutaActual = tamanio_recursivo(ruta)
 
-    pasosRuta = ruta.split("\\")
+    pasosRuta = ruta.split(os.sep)
     if len(pasosRuta) > 3:
-        ruta = f"{pasosRuta[0]}\\...\\{pasosRuta[-2]}\\{pasosRuta[-1]}"
+        rutaAct = os.sep.join([pasosRuta[0], "...", pasosRuta[-2], pasosRuta[-1]])
     
     imprimir("Ruta actual: ", color.fore["PATH"])
-    imprimir(f"{ruta}")
+    imprimir(f"{rutaAct}")
     imprimir(f" [{tamanioRutaActual} bytes ({numeroArchivosRutaActual} archivos)]\n", color.fore["PATH"])
