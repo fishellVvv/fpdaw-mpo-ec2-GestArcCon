@@ -34,15 +34,13 @@ def listar_contenido(rutaInt):
         carpetas = []
         archivos = []
 
-        for nombre in contenido:
-            if nombre == ".git":      # opcional
-                continue
-            ruta = os.path.join(rutaInt, nombre)
+        for elemento in contenido:
+            rutaElem = os.path.join(rutaInt, elemento)
 
-            if os.path.isdir(ruta):
-                carpetas.append(nombre)
+            if os.path.isdir(rutaElem):
+                carpetas.append(elemento)
             else:
-                archivos.append(nombre)
+                archivos.append(elemento)
 
         carpetas.sort()
         archivos.sort()
@@ -86,7 +84,7 @@ def crear_archivo(nombre):
             raise ValueError("Error: el nombre del archivo no puede ser una ruta\n")
         rutaArc = os.path.join(ruta, nombre)
 
-        contenido = io.leer_string(f"\nEscribe en {nombre}:\n", color.fore["INPUT"]).strip()
+        contenido = io.leer_string(f"\nEscribe en {nombre}: ", color.fore["INPUT"]).strip()
         with open(rutaArc, "x", encoding="utf-8") as archivo:
             archivo.write(contenido)
 
@@ -104,7 +102,7 @@ def escribir_en_archivo(nombre):
             raise ValueError("Error: el archivo debe ser .txt\n")
         rutaArc = os.path.join(ruta, nombre)
 
-        contenido = io.leer_string(f"\nEscribe en {nombre}:\n", color.fore["INPUT"]).strip()
+        contenido = io.leer_string(f"\nEscribe en {nombre}: ", color.fore["INPUT"]).strip()
         with open(rutaArc, "a", encoding="utf-8") as archivo:
             archivo.write(f"\n{contenido}")
 
@@ -118,8 +116,6 @@ def eliminar_elemento(nombre):
     try:
         if "/" in nombre or "\\" in nombre:
             raise ValueError("Error: el nombre no puede ser una ruta\n")
-        if nombre.split(".")[-1] == "py" or nombre == "utils":
-            raise ValueError("Error: por seguridad no se permite eliminar archivos del programa\n")
         rutaElem = os.path.join(ruta, nombre)
 
         if not os.path.exists(rutaElem):
@@ -174,8 +170,6 @@ def renombrar_elemento(nombre):
     try:
         if "/" in nombre or "\\" in nombre:
             raise ValueError("Error: el nombre no puede ser una ruta\n")
-        if nombre.split(".")[-1] == "py" or nombre == "utils":
-            raise ValueError("Error: por seguridad no se permite renombrar archivos del programa\n")
         rutaElem = os.path.join(ruta, nombre)
 
         nuevoNombre = io.leer_string("\nIndica el nuevo nombre (con extensión si la tiene): ", color.fore["INPUT"]).strip()
@@ -212,6 +206,7 @@ def cambiar_ruta(nombre):
         if not os.path.isdir(rutaNueva):
             raise FileNotFoundError(f"Error: el directorio '{nombre}' no existe\n")
         
+        # protección para no salir de la carpeta prueba
         base_real  = os.path.realpath(rutaBase)
         nueva_real = os.path.realpath(rutaNueva)
         if os.path.commonpath([base_real, nueva_real]) != base_real:
@@ -297,7 +292,7 @@ def main():
 
             case 8:
                 try:
-                    nombre = io.leer_string("\nIndica el nombre del directorio (escribe '..' para navegar hacia atrás): ", color.fore["INPUT"]).strip()
+                    nombre = io.leer_string("\nIndica el nombre del directorio al que navegar (navegar atrás con '..'): ", color.fore["INPUT"]).strip()
                     io.imprimir(cambiar_ruta(nombre), color.fore["SUCCESS"])
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
