@@ -41,7 +41,7 @@ def listar_contenido(rutaInt):
                 carpetas.append(elemento)
             else:
                 archivos.append(elemento)
-
+                
         carpetas.sort()
         archivos.sort()
 
@@ -66,11 +66,10 @@ def listar_contenido(rutaInt):
 def crear_directorio(nombre):
     # Crea una nueva carpeta
     try:
-        if "/" in nombre or "\\" in nombre:
-            raise ValueError("Error: el nombre no puede ser una ruta\n")
-        if nombre in ("", ".", ".."):
-            raise ValueError("Error: nombre no válido\n")
+        io.comprobar_nombre(nombre)
+
         rutaDir = os.path.join(ruta, nombre)
+
         os.mkdir(rutaDir)
 
         log.registrar_com("crear_directorio", rutaDir)
@@ -81,14 +80,11 @@ def crear_directorio(nombre):
 def crear_archivo(nombre):
     # Crea un archivo de texto y permite escribir en él
     try:
-        if "/" in nombre or "\\" in nombre:
-            raise ValueError("Error: el nombre del archivo no puede ser una ruta\n")
-        if nombre in ("", ".", ".."):
-            raise ValueError("Error: nombre no válido\n")
-        if nombre.split(".")[-1] != "txt":
-            raise ValueError("Error: el archivo debe ser .txt\n")
+        io.comprobar_nombre(nombre)
+        io.comprobar_txt(nombre)
         
         rutaArc = os.path.join(ruta, nombre)
+
         if os.path.exists(rutaArc):
             raise FileExistsError(f"Error: el archivo '{nombre}' ya existe\n")
 
@@ -104,12 +100,9 @@ def crear_archivo(nombre):
 def escribir_en_archivo(nombre):
     # Abre un archivo existente y añade texto al final
     try:
-        if "/" in nombre or "\\" in nombre:
-            raise ValueError("Error: el nombre del archivo no puede ser una ruta\n")
-        if nombre in ("", ".", ".."):
-            raise ValueError("Error: nombre no válido\n")
-        if nombre.split(".")[-1] != "txt":
-            raise ValueError("Error: el archivo debe ser .txt\n")
+        io.comprobar_nombre(nombre)
+        io.comprobar_txt(nombre)
+
         rutaArc = os.path.join(ruta, nombre)
 
         contenido = io.leer_string(f"Escribe en {nombre}: ", color.fore["INPUT"]).strip()
@@ -124,10 +117,8 @@ def escribir_en_archivo(nombre):
 def eliminar_elemento(nombre):
     # Elimina un archivo o carpeta
     try:
-        if "/" in nombre or "\\" in nombre:
-            raise ValueError("Error: el nombre no puede ser una ruta\n")
-        if nombre in ("", ".", ".."):
-            raise ValueError("Error: nombre no válido\n")
+        io.comprobar_nombre(nombre)
+
         rutaElem = os.path.join(ruta, nombre)
 
         if not os.path.exists(rutaElem):
@@ -156,10 +147,7 @@ def eliminar_elemento(nombre):
 def mostrar_informacion(nombre):
     # Muestra tamaño y fecha de modificación
     try:
-        if "/" in nombre or "\\" in nombre:
-            raise ValueError("Error: el nombre no puede ser una ruta\n")
-        if nombre in ("", ".", ".."):
-            raise ValueError("Error: nombre no válido\n")
+        io.comprobar_nombre(nombre)
         
         rutaElem = os.path.join(ruta, nombre)
         elemStat = os.stat(rutaElem)
@@ -182,10 +170,8 @@ def mostrar_informacion(nombre):
 def renombrar_elemento(nombre):
     # Renombra un archivo o carpeta
     try:
-        if "/" in nombre or "\\" in nombre:
-            raise ValueError("Error: el nombre no puede ser una ruta\n")
-        if nombre in ("", ".", ".."):
-            raise ValueError("Error: nombre no válido\n")
+        io.comprobar_nombre(nombre)
+
         rutaElem = os.path.join(ruta, nombre)
 
         nuevoNombre = io.leer_string("\nIndica el nuevo nombre (con extensión si la tiene): ", color.fore["INPUT"]).strip()

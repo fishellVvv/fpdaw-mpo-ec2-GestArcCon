@@ -24,6 +24,18 @@ def imp_marco(mensaje, color = None):
         msjCompleto = color + msjCompleto + Style.RESET_ALL
     print(f"\n{msjCompleto}")
 
+def mostrar_ruta_actual(rutaAct):
+    tamanioRutaActual, numeroArchivosRutaActual = tamanio_recursivo(rutaAct)
+
+    pasosRuta = rutaAct.split(os.sep)
+    
+    if len(pasosRuta) > 3:
+        rutaAct = os.sep.join([pasosRuta[0], "...", pasosRuta[-2], pasosRuta[-1]])
+    
+    imprimir("Ruta actual: ", color.fore["PATH"])
+    imprimir(f"{rutaAct}")
+    imprimir(f" [{tamanioRutaActual} bytes ({numeroArchivosRutaActual} archivos)]\n", color.fore["PATH"])
+
 ''' funciones input '''
 
 def leer_entero(mensaje = "Introduce un número entero: ", color = None):
@@ -80,14 +92,12 @@ def tamanio_recursivo(rutaDir):
 
     return tamanioTotal, numeroArchivos
 
-def mostrar_ruta_actual(rutaAct):
-    tamanioRutaActual, numeroArchivosRutaActual = tamanio_recursivo(rutaAct)
-
-    pasosRuta = rutaAct.split(os.sep)
+def comprobar_nombre(nombre):
+    if "/" in nombre or "\\" in nombre:
+        raise ValueError("Error: el nombre no puede ser una ruta\n")
+    if nombre in ("", ".", ".."):
+        raise ValueError("Error: nombre no válido\n")
     
-    if len(pasosRuta) > 3:
-        rutaAct = os.sep.join([pasosRuta[0], "...", pasosRuta[-2], pasosRuta[-1]])
-    
-    imprimir("Ruta actual: ", color.fore["PATH"])
-    imprimir(f"{rutaAct}")
-    imprimir(f" [{tamanioRutaActual} bytes ({numeroArchivosRutaActual} archivos)]\n", color.fore["PATH"])
+def comprobar_txt(nombre):
+    if nombre.split(".")[-1] != "txt":
+        raise ValueError("Error: el archivo debe ser .txt\n")
