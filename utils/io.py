@@ -86,6 +86,7 @@ def mostrar_ruta_actual(ruta):
     tamanioRutaActual, numeroArchivosRutaActual = tamanio_recursivo(ruta)
 
     pasosRuta = ruta.split(os.sep)
+    rutaAct = ruta
     if len(pasosRuta) > 3:
         rutaAct = os.sep.join([pasosRuta[0], "...", pasosRuta[-2], pasosRuta[-1]])
     
