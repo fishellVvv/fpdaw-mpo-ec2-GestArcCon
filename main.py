@@ -7,8 +7,8 @@ rutaBase = os.path.join(os.getcwd(), "pruebas")
 if not os.path.isdir(rutaBase):
     try:
         os.makedirs(rutaBase)
-    except OSError:
-        raise OSError(f"Error creando la carpeta de trabajo '{rutaBase}'\n")
+    except OSError as e:
+        raise OSError(f"Error creando la carpeta de trabajo '{rutaBase}': {e.strerror}\n")
 ruta = rutaBase
 
 def mostrar_menu():
