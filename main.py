@@ -3,6 +3,12 @@ from datetime import datetime
 import os
 
 rutaBase = os.path.join(os.getcwd(), "pruebas")
+
+if not os.path.isdir(rutaBase):
+    try:
+        os.makedirs(rutaBase)
+    except OSError:
+        raise OSError(f"Error creando la carpeta de trabajo '{rutaBase}'\n")
 ruta = rutaBase
 
 def mostrar_menu():
@@ -74,7 +80,7 @@ def crear_directorio(nombre):
 def crear_archivo(nombre):
     # Crea un archivo de texto y permite escribir en él
     try:
-        if len(nombre.split("/")) > 1:
+        if "/" in nombre or "\\" in nombre:
             raise ValueError("Error: el nombre del archivo no puede ser una ruta\n")
         rutaArc = os.path.join(ruta, nombre)
 
@@ -82,7 +88,7 @@ def crear_archivo(nombre):
         with open(rutaArc, "x", encoding="utf-8") as archivo:
             archivo.write(contenido)
 
-        log.registrar_com("crear_archivo", nombre)
+        log.registrar_com("crear_archivo", rutaArc)
         return f"Archivo '{nombre}' creado con éxito.\n"
     except FileExistsError:
         raise FileExistsError(f"Error: el archivo '{nombre}' ya existe\n")
@@ -90,7 +96,7 @@ def crear_archivo(nombre):
 def escribir_en_archivo(nombre):
     # Abre un archivo existente y añade texto al final
     try:
-        if len(nombre.split("/")) > 1:
+        if "/" in nombre or "\\" in nombre:
             raise ValueError("Error: el nombre del archivo no puede ser una ruta\n")
         if nombre.split(".")[-1] != "txt":
             raise ValueError("Error: el archivo debe ser .txt\n")
@@ -100,7 +106,7 @@ def escribir_en_archivo(nombre):
         with open(rutaArc, "a", encoding="utf-8") as archivo:
             archivo.write(f"\n{contenido}")
 
-        log.registrar_com("escribir_en_archivo", nombre)
+        log.registrar_com("escribir_en_archivo", rutaArc)
         return f"Archivo '{nombre}' modificado con éxito.\n"
     except FileNotFoundError:
         raise FileNotFoundError(f"Error: el archivo '{nombre}' no existe\n")
@@ -127,7 +133,7 @@ def eliminar_elemento(nombre):
             os.remove(rutaElem)
             mensaje = f"Archivo '{nombre}' eliminado con éxito.\n"
 
-        log.registrar_com("eliminar_elemento", nombre)
+        log.registrar_com("eliminar_elemento", rutaElem)
         return mensaje
     except FileNotFoundError:
         raise FileNotFoundError(f"Error: el archivo o directorio '{nombre}' no existe\n")
@@ -148,7 +154,7 @@ def mostrar_informacion(nombre):
             fechaMod = datetime.fromtimestamp(elemStat.st_mtime).isoformat(timespec="seconds")
             mensaje = f"Nombre: '{nombre}' | Tipo: archivo ({extension}) | Tamaño: {tamanio} bytes | Fecha de modificación: {fechaMod} \n"
 
-        log.registrar_com("mostrar_informacion", nombre)
+        log.registrar_com("mostrar_informacion", rutaElem)
         io.imprimir(mensaje, color.fore["INFO"])
     except FileNotFoundError:
         raise FileNotFoundError(f"Error: el archivo o directorio '{nombre}' no existe\n")
@@ -165,14 +171,38 @@ def renombrar_elemento(nombre):
 
         os.rename(rutaElem, rutaNuevoElem)
 
-        log.registrar_com("renombrar_elemento", nuevoNombre)
+        log.registrar_com("renombrar_elemento", rutaNuevoElem)
         return f"Elemento '{nuevoNombre}' renombrado con éxito.\n"
+    except FileExistsError:
+        raise FileExistsError("Error: ya existe un archivo o directorio con ese nombre\n")
     except FileNotFoundError:
         raise FileNotFoundError(f"Error: el archivo o directorio '{nombre}' no existe\n")
+    except PermissionError:
+        raise PermissionError("Error: permisos insuficientes para la operación solicitada\n")
 
-def cambiar_ruta(ruta):
+def cambiar_ruta(nombre):
     # Navega hacia otra carpeta
-    pass
+    try:
+        global ruta
+
+        if nombre == "..":
+            rutaNueva = os.path.dirname(ruta)
+        elif nombre in (".", ""):
+            rutaNueva = ruta
+        else:
+            rutaNueva = os.path.join(ruta, nombre)
+
+        if not os.path.isdir(rutaNueva):
+            raise FileNotFoundError(f"Error: el directorio '{nombre}' no existe\n")
+        if os.path.commonpath([rutaBase, rutaNueva]) != rutaBase:
+            raise PermissionError("Error: no se permite navegar fuera de la carpeta de trabajo\n")
+
+        ruta = rutaNueva
+        
+        log.registrar_com("cambiar_ruta", rutaNueva)
+        return f"Ruta actual actualizada con éxito.\n"
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Error: el archivo o directorio '{nombre}' no existe\n")
 
 def main():
     # Bucle principal del programa
@@ -185,7 +215,7 @@ def main():
         try:
             opcion = io.leer_entero("\nSelecciona una opción: ", color.fore["INPUT"])
         except ValueError:
-            io.imprimir("Error: introduce un número del 1 al 7.\n", color.fore["ERROR"])
+            io.imprimir("Error: introduce un número del 1 al 9.\n", color.fore["ERROR"])
             io.pulsa_enter()
             continue
 
@@ -247,8 +277,8 @@ def main():
 
             case 8:
                 try:
-                    nombre = io.leer_string("\nIndica el nombre del directorio ('../' para navegar hacia atrás): ", color.fore["INPUT"]).strip()
-                    io.imprimir(cambiar_ruta(ruta), color.fore["SUCCESS"])
+                    nombre = io.leer_string("\nIndica el nombre del directorio (escribe '..' para navegar hacia atrás): ", color.fore["INPUT"]).strip()
+                    io.imprimir(cambiar_ruta(nombre), color.fore["SUCCESS"])
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
                 io.pulsa_enter()
@@ -258,7 +288,7 @@ def main():
                 break
 
             case _:
-                io.imprimir("Error: introduce un número del 1 al 7.\n", color.fore["ERROR"])
+                io.imprimir("Error: introduce un número del 1 al 9.\n", color.fore["ERROR"])
                 io.pulsa_enter()
 
     io.imprimir("\nGracias por utilizar GestArcCon.\n\n", color.fore["EXIT"])
