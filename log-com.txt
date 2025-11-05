@@ -2,3 +2,10 @@
 2025-11-05T06:29:01 | listar_contenido | ./
 2025-11-05T06:29:32 | mostrar_informacion | log-com.txt
 2025-11-05T06:29:36 | CIERRE | GestArcCon
+2025-11-05T09:36:18 | INICIO | GestArcCon
+2025-11-05T09:36:23 | listar_contenido | ./
+2025-11-05T09:36:40 | crear_directorio | ./prueba
+2025-11-05T09:37:10 | renombrar_elemento | pruebaRenombrado
+2025-11-05T09:37:42 | crear_archivo | hola.txt
+2025-11-05T09:38:32 | renombrar_elemento | holaRenombrado.txt
+2025-11-05T09:38:42 | CIERRE | GestArcCon

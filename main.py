@@ -16,7 +16,9 @@ def mostrar_menu():
 4. Escribir texto en un archivo existente
 5. Eliminar un archivo o directorio
 6. Mostrar información del archivo
-7. Salir""",
+7. Renombrar un archivo o directorio
+8. Navegar a otro directorio
+9. Salir""",
     color.fore["MENU"])
 
 def listar_contenido(rutaInt):
@@ -148,6 +150,27 @@ def mostrar_informacion(nombre):
         io.imprimir(mensaje, color.fore["INFO"])
     except FileNotFoundError:
         raise FileNotFoundError(f"❌ Error: el archivo o directorio '{nombre}' no existe\n")
+    
+def renombrar_elemento(nombre):
+    # Renombra un archivo o carpeta
+    try:
+        if nombre.split(".")[-1] == "py" or nombre == "utils":
+            raise ValueError("❌ Error: por seguridad no se permite renombrar archivos del programa\n")
+        rutaElem = os.path.join(ruta, nombre)
+
+        nuevoNombre = io.leer_string("\nIndica el nuevo nombre (con extensión si la tiene): ", color.fore["INPUT"]).strip()
+        rutaNuevoElem = os.path.join(ruta, nuevoNombre)
+
+        os.rename(rutaElem, rutaNuevoElem)
+
+        log.registrar_com("renombrar_elemento", nuevoNombre)
+        return f"✅ Elemento '{nuevoNombre}' renombrado con éxito.\n"
+    except FileNotFoundError:
+        raise FileNotFoundError(f"❌ Error: el archivo o directorio '{nombre}' no existe\n")
+
+def cambiar_ruta(ruta):
+    # Navega hacia otra carpeta
+    pass
 
 def main():
     # Bucle principal del programa
@@ -213,6 +236,22 @@ def main():
                 io.pulsa_enter()
 
             case 7:
+                try:
+                    nombre = io.leer_string("\nIndica el nombre del directorio o archivo (con extensión): ", color.fore["INPUT"]).strip()
+                    io.imprimir(renombrar_elemento(nombre), color.fore["SUCCESS"])
+                except Exception as e:
+                    io.imprimir(str(e), color.fore["ERROR"])
+                io.pulsa_enter()
+
+            case 8:
+                try:
+                    nombre = io.leer_string("\nIndica el nombre del directorio ('../' para navegar hacia atrás): ", color.fore["INPUT"]).strip()
+                    io.imprimir(cambiar_ruta(ruta), color.fore["SUCCESS"])
+                except Exception as e:
+                    io.imprimir(str(e), color.fore["ERROR"])
+                io.pulsa_enter()
+
+            case 9:
                 io.imprimir("\nSaliendo...", color.fore["EXIT"])
                 break
 
