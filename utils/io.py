@@ -22,7 +22,7 @@ def imp_marco(mensaje, color = None):
 
     if color is not None:
         msjCompleto = color + msjCompleto + Style.RESET_ALL
-    print(msjCompleto)
+    print(f"\n{msjCompleto}")
 
 ''' funciones input '''
 

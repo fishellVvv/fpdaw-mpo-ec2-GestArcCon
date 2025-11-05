@@ -1,0 +1,4 @@
+2025-11-05T06:28:56 | INICIO | GestArcCon
+2025-11-05T06:29:01 | listar_contenido | ./
+2025-11-05T06:29:32 | mostrar_informacion | log-com.txt
+2025-11-05T06:29:36 | CIERRE | GestArcCon

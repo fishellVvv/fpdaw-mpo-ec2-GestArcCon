@@ -151,12 +151,14 @@ def mostrar_informacion(nombre):
 
 def main():
     # Bucle principal del programa
+    log.registrar_com("INICIO", "GestArcCon")
+
     while True:
         mostrar_menu()
         tamanioRutaActual, numeroArchivosRutaActual = io.tamanio_recursivo(ruta)
         io.imprimir(f"Ruta actual: {ruta}    [{tamanioRutaActual} bytes ({numeroArchivosRutaActual} archivos)]\n", color.fore["PATH"])
         try:
-            opcion = io.leer_entero("Selecciona una opción: ", color.fore["INPUT"])
+            opcion = io.leer_entero("\nSelecciona una opción: ", color.fore["INPUT"])
         except ValueError:
             io.imprimir("❌ Error: introduce un número del 1 al 7.\n", color.fore["ERROR"])
             io.pulsa_enter()
@@ -219,6 +221,7 @@ def main():
                 io.pulsa_enter()
 
     io.imprimir("\nGracias por utilizar GestArcCon.\n\n", color.fore["EXIT"])
+    log.registrar_com("CIERRE", "GestArcCon")
 
 if __name__ == '__main__':
     main()
