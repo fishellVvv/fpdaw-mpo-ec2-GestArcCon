@@ -46,7 +46,7 @@ def listar_contenido(rutaInt):
         archivos.sort()
 
         if len(carpetas + archivos) == 0:
-            io.imprimir("El directorio está vacío.")
+            io.imprimir("\nEl directorio está vacío.")
 
         print()
         for elemento in carpetas + archivos:
@@ -57,8 +57,7 @@ def listar_contenido(rutaInt):
                 tipo = "carpeta"
 
             mensaje = f"{elemento} ({tipo})"
-            io.imprimir(mensaje, color.colorear(io.obtener_extension(rutaInt, elemento)))
-            print()
+            io.imprimir(f"{mensaje}\n", color.colorear(io.obtener_extension(rutaInt, elemento)))
 
         log.registrar_com("listar_contenido", rutaInt)
     except FileNotFoundError:
@@ -82,9 +81,11 @@ def crear_archivo(nombre):
     try:
         if "/" in nombre or "\\" in nombre:
             raise ValueError("Error: el nombre del archivo no puede ser una ruta\n")
+        if nombre.split(".")[-1] != "txt":
+            raise ValueError("Error: el archivo debe ser .txt\n")
         rutaArc = os.path.join(ruta, nombre)
 
-        contenido = io.leer_string(f"\nEscribe en {nombre}: ", color.fore["INPUT"]).strip()
+        contenido = io.leer_string(f"Escribe en {nombre}: ", color.fore["INPUT"]).strip()
         with open(rutaArc, "x", encoding="utf-8") as archivo:
             archivo.write(contenido)
 
@@ -102,7 +103,7 @@ def escribir_en_archivo(nombre):
             raise ValueError("Error: el archivo debe ser .txt\n")
         rutaArc = os.path.join(ruta, nombre)
 
-        contenido = io.leer_string(f"\nEscribe en {nombre}: ", color.fore["INPUT"]).strip()
+        contenido = io.leer_string(f"Escribe en {nombre}: ", color.fore["INPUT"]).strip()
         with open(rutaArc, "a", encoding="utf-8") as archivo:
             archivo.write(f"\n{contenido}")
 
@@ -121,7 +122,7 @@ def eliminar_elemento(nombre):
         if not os.path.exists(rutaElem):
             raise FileNotFoundError(f"Error: el archivo o directorio '{nombre}' no existe\n")
 
-        confirmacion = io.leer_string(f"\nConfirmar eliminación de {nombre} (S/N): ", color.fore["INPUT"]).strip()
+        confirmacion = io.leer_string(f"Confirmar eliminación de {nombre} (S/N): ", color.fore["INPUT"]).strip()
         if confirmacion.lower() != "s":
             return f"Eliminación de '{nombre}' cancelada.\n"
         
@@ -153,12 +154,12 @@ def mostrar_informacion(nombre):
         if os.path.isdir(rutaElem):
             tamanio, numeroArchivos = io.tamanio_recursivo(rutaElem)
             fecha_mod = datetime.fromtimestamp(elemStat.st_mtime).isoformat(timespec="seconds")
-            mensaje = f"Nombre: '{nombre}' | Tipo: directorio | Tamaño del contenido: {tamanio} bytes ({numeroArchivos} archivos) | Fecha de modificación: {fecha_mod} \n"
+            mensaje = f"\nNombre: '{nombre}' | Tipo: directorio | Tamaño del contenido: {tamanio} bytes ({numeroArchivos} archivos) | Fecha de modificación: {fecha_mod} \n"
         else:
             extension = io.obtener_extension(ruta, nombre)
             tamanio = elemStat.st_size
             fechaMod = datetime.fromtimestamp(elemStat.st_mtime).isoformat(timespec="seconds")
-            mensaje = f"Nombre: '{nombre}' | Tipo: archivo ({extension}) | Tamaño: {tamanio} bytes | Fecha de modificación: {fechaMod} \n"
+            mensaje = f"\nNombre: '{nombre}' | Tipo: archivo ({extension}) | Tamaño: {tamanio} bytes | Fecha de modificación: {fechaMod} \n"
 
         log.registrar_com("mostrar_informacion", rutaElem)
         io.imprimir(mensaje, color.fore["INFO"])
@@ -252,7 +253,7 @@ def main():
 
             case 3:
                 try:
-                    nombre = io.leer_string("\nIndica el nombre del nuevo archivo (sin extensión): ", color.fore["INPUT"]).strip() + ".txt"
+                    nombre = io.leer_string("\nIndica el nombre del nuevo archivo (con extensión .txt): ", color.fore["INPUT"]).strip()
                     io.imprimir(crear_archivo(nombre), color.fore["SUCCESS"])
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
@@ -268,7 +269,7 @@ def main():
 
             case 5:
                 try:
-                    nombre = io.leer_string("\nIndica el nombre del directorio o archivo (con extensión): ", color.fore["INPUT"]).strip()
+                    nombre = io.leer_string("\nIndica el nombre del directorio o archivo a eliminar (con extensión): ", color.fore["INPUT"]).strip()
                     io.imprimir(eliminar_elemento(nombre), color.fore["SUCCESS"])
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
@@ -276,7 +277,7 @@ def main():
 
             case 6:
                 try:
-                    nombre = io.leer_string("\nIndica el nombre del directorio o archivo (con extensión): ", color.fore["INPUT"]).strip()
+                    nombre = io.leer_string("\nIndica el nombre del directorio o archivo a mostrar (con extensión): ", color.fore["INPUT"]).strip()
                     mostrar_informacion(nombre)
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
@@ -284,7 +285,7 @@ def main():
 
             case 7:
                 try:
-                    nombre = io.leer_string("\nIndica el nombre del directorio o archivo (con extensión): ", color.fore["INPUT"]).strip()
+                    nombre = io.leer_string("\nIndica el nombre del directorio o archivo a renombrar (con extensión): ", color.fore["INPUT"]).strip()
                     io.imprimir(renombrar_elemento(nombre), color.fore["SUCCESS"])
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])

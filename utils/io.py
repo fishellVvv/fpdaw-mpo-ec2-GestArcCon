@@ -1,4 +1,4 @@
-from utils import color
+from . import color
 from colorama import Style
 import os
 

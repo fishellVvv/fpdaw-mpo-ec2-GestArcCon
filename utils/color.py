@@ -1,5 +1,5 @@
 from colorama import Fore, init
-init()
+init(autoreset=True)
 
 ''' color '''
 

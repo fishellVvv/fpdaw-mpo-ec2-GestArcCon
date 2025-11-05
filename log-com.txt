@@ -56,3 +56,41 @@
 2025-11-05T13:20:08 | crear_archivo | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\carpetaPrueba\hola.txt
 2025-11-05T13:20:53 | cambiar_ruta | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas
 2025-11-05T13:21:18 | CIERRE | GestArcCon
+2025-11-05T15:08:28 | INICIO | GestArcCon
+2025-11-05T15:08:31 | listar_contenido | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas
+2025-11-05T15:15:12 | CIERRE | GestArcCon
+2025-11-05T18:57:53 | INICIO | GestArcCon
+2025-11-05T18:57:55 | listar_contenido | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas
+2025-11-05T18:58:01 | CIERRE | GestArcCon
+2025-11-05T19:06:06 | INICIO | GestArcCon
+2025-11-05T19:06:09 | listar_contenido | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas
+2025-11-05T19:06:20 | CIERRE | GestArcCon
+2025-11-05T19:07:31 | INICIO | GestArcCon
+2025-11-05T19:07:36 | listar_contenido | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas
+2025-11-05T19:08:02 | crear_directorio | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\hola
+2025-11-05T19:08:20 | cambiar_ruta | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\hola
+2025-11-05T19:08:36 | crear_directorio | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\hola\que tal
+2025-11-05T19:08:54 | crear_archivo | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\hola\texto.txt
+2025-11-05T19:09:39 | escribir_en_archivo | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\hola\texto.txt
+2025-11-05T19:09:58 | cambiar_ruta | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas
+2025-11-05T19:10:15 | crear_archivo | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\otro.txt
+2025-11-05T19:10:34 | crear_archivo | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\borrame.txt
+2025-11-05T19:10:55 | eliminar_elemento | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\borrame.txt
+2025-11-05T19:11:21 | mostrar_informacion | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\otro.txt
+2025-11-05T19:11:44 | renombrar_elemento | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\cosas
+2025-11-05T19:11:57 | CIERRE | GestArcCon
+2025-11-05T19:27:23 | INICIO | GestArcCon
+2025-11-05T19:27:30 | listar_contenido | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas
+2025-11-05T19:27:47 | crear_directorio | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\borrame
+2025-11-05T19:28:46 | crear_archivo | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\texto.txt
+2025-11-05T19:29:04 | escribir_en_archivo | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\texto.txt
+2025-11-05T19:29:40 | eliminar_elemento | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\borrame
+2025-11-05T19:31:02 | mostrar_informacion | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\cosas
+2025-11-05T19:32:53 | renombrar_elemento | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\texto2.pdf
+2025-11-05T19:33:32 | cambiar_ruta | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\cosas
+2025-11-05T19:34:19 | listar_contenido | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\cosas
+2025-11-05T19:34:36 | cambiar_ruta | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas
+2025-11-05T19:35:28 | cambiar_ruta | G:\Otros ordenadores\Mi PC\Drive\04. Estudios\01. FP DAW (Primero)\02. MPO (Python)\fpdaw-mpo-ec2-GestArcCon\pruebas\cosas
+2025-11-05T19:36:02 | CIERRE | GestArcCon
+2025-11-05T19:36:36 | INICIO | GestArcCon
+2025-11-05T19:37:08 | CIERRE | GestArcCon
