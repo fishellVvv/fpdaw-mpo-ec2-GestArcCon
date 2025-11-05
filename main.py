@@ -68,6 +68,8 @@ def crear_directorio(nombre):
     try:
         if "/" in nombre or "\\" in nombre:
             raise ValueError("Error: el nombre no puede ser una ruta\n")
+        if nombre in ("", ".", ".."):
+            raise ValueError("Error: nombre no válido\n")
         rutaDir = os.path.join(ruta, nombre)
         os.mkdir(rutaDir)
 
@@ -81,6 +83,8 @@ def crear_archivo(nombre):
     try:
         if "/" in nombre or "\\" in nombre:
             raise ValueError("Error: el nombre del archivo no puede ser una ruta\n")
+        if nombre in ("", ".", ".."):
+            raise ValueError("Error: nombre no válido\n")
         if nombre.split(".")[-1] != "txt":
             raise ValueError("Error: el archivo debe ser .txt\n")
         rutaArc = os.path.join(ruta, nombre)
@@ -99,6 +103,8 @@ def escribir_en_archivo(nombre):
     try:
         if "/" in nombre or "\\" in nombre:
             raise ValueError("Error: el nombre del archivo no puede ser una ruta\n")
+        if nombre in ("", ".", ".."):
+            raise ValueError("Error: nombre no válido\n")
         if nombre.split(".")[-1] != "txt":
             raise ValueError("Error: el archivo debe ser .txt\n")
         rutaArc = os.path.join(ruta, nombre)
@@ -117,6 +123,8 @@ def eliminar_elemento(nombre):
     try:
         if "/" in nombre or "\\" in nombre:
             raise ValueError("Error: el nombre no puede ser una ruta\n")
+        if nombre in ("", ".", ".."):
+            raise ValueError("Error: nombre no válido\n")
         rutaElem = os.path.join(ruta, nombre)
 
         if not os.path.exists(rutaElem):
@@ -147,6 +155,8 @@ def mostrar_informacion(nombre):
     try:
         if "/" in nombre or "\\" in nombre:
             raise ValueError("Error: el nombre no puede ser una ruta\n")
+        if nombre in ("", ".", ".."):
+            raise ValueError("Error: nombre no válido\n")
         
         rutaElem = os.path.join(ruta, nombre)
         elemStat = os.stat(rutaElem)
@@ -171,6 +181,8 @@ def renombrar_elemento(nombre):
     try:
         if "/" in nombre or "\\" in nombre:
             raise ValueError("Error: el nombre no puede ser una ruta\n")
+        if nombre in ("", ".", ".."):
+            raise ValueError("Error: nombre no válido\n")
         rutaElem = os.path.join(ruta, nombre)
 
         nuevoNombre = io.leer_string("\nIndica el nuevo nombre (con extensión si la tiene): ", color.fore["INPUT"]).strip()
