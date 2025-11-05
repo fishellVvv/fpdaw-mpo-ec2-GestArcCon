@@ -87,7 +87,10 @@ def crear_archivo(nombre):
             raise ValueError("Error: nombre no válido\n")
         if nombre.split(".")[-1] != "txt":
             raise ValueError("Error: el archivo debe ser .txt\n")
+        
         rutaArc = os.path.join(ruta, nombre)
+        if os.path.exists(rutaArc):
+            raise FileExistsError(f"Error: el archivo '{nombre}' ya existe\n")
 
         contenido = io.leer_string(f"Escribe en {nombre}: ", color.fore["INPUT"]).strip()
         with open(rutaArc, "x", encoding="utf-8") as archivo:
@@ -219,10 +222,10 @@ def cambiar_ruta(nombre):
         if not os.path.isdir(rutaNueva):
             raise FileNotFoundError(f"Error: el directorio '{nombre}' no existe\n")
         
-        # protección para no salir de la carpeta prueba
-        base_real  = os.path.realpath(rutaBase)
-        nueva_real = os.path.realpath(rutaNueva)
-        if os.path.commonpath([base_real, nueva_real]) != base_real:
+        # protección para no salir de la carpeta de trabajo
+        baseReal  = os.path.realpath(rutaBase)
+        nuevaReal = os.path.realpath(rutaNueva)
+        if os.path.commonpath([baseReal, nuevaReal]) != baseReal:
             raise PermissionError("Error: no se permite navegar fuera de la carpeta de trabajo\n")
 
         ruta = rutaNueva
