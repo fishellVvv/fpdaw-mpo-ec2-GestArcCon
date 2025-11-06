@@ -51,13 +51,14 @@ def listar_contenido(rutaInt):
         print()
         for elemento in carpetas + archivos:
 
-            if io.obtener_extension(rutaInt, elemento) != "dir":
+            extension = io.obtener_extension(rutaInt, elemento)
+            if extension != "dir":
                 tipo = "archivo"
             else: 
                 tipo = "carpeta"
-
             mensaje = f"{elemento} ({tipo})"
-            io.imprimir(f"{mensaje}\n", color.colorear(io.obtener_extension(rutaInt, elemento)))
+            
+            io.imprimir(f"{mensaje}\n", color.colorear(extension))
 
         log.registrar_com("listar_contenido", rutaInt)
     except FileNotFoundError:
@@ -104,6 +105,11 @@ def escribir_en_archivo(nombre):
         io.comprobar_txt(nombre)
 
         rutaArc = os.path.join(ruta, nombre)
+
+        if not os.path.exists(rutaArc):
+            raise FileNotFoundError(f"Error: el archivo '{nombre}' no existe\n")
+        if os.path.isdir(rutaArc):
+            raise IsADirectoryError(f"Error: '{nombre}' es un directorio\n")
 
         contenido = io.leer_string(f"Escribe en {nombre}: ", color.fore["INPUT"]).strip()
         with open(rutaArc, "a", encoding="utf-8") as archivo:
@@ -175,8 +181,9 @@ def renombrar_elemento(nombre):
         rutaElem = os.path.join(ruta, nombre)
 
         nuevoNombre = io.leer_string("\nIndica el nuevo nombre (con extensión si la tiene): ", color.fore["INPUT"]).strip()
-        if "/" in nuevoNombre or "\\" in nuevoNombre:
-            raise ValueError("Error: el nuevo nombre no puede ser una ruta\n")
+
+        io.comprobar_nombre(nuevoNombre)
+
         rutaNuevoElem = os.path.join(ruta, nuevoNombre)
 
         if os.path.exists(rutaNuevoElem):

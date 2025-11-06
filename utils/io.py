@@ -71,7 +71,11 @@ def tamanio_recursivo(rutaDir):
     tamanioTotal = 0
     numeroArchivos = 0
 
-    contenido = os.listdir(rutaDir)
+    try:
+        contenido = os.listdir(rutaDir)
+    except (FileNotFoundError, PermissionError):
+        return 0, 0
+    
     for elemento in contenido:
         rutaElem = os.path.join(rutaDir, elemento)
 
