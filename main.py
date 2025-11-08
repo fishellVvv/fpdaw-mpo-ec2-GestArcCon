@@ -89,7 +89,7 @@ def crear_archivo(nombre):
         if os.path.exists(rutaArc):
             raise FileExistsError(f"Error: el archivo '{nombre}' ya existe\n")
 
-        contenido = io.leer_string(f"Escribe en {nombre}: ", color.fore["INPUT"]).strip()
+        contenido = io.leer_string(f"Escribe en {nombre}: ").strip()
         with open(rutaArc, "x", encoding="utf-8") as archivo:
             archivo.write(contenido)
 
@@ -111,7 +111,7 @@ def escribir_en_archivo(nombre):
         if os.path.isdir(rutaArc):
             raise IsADirectoryError(f"Error: '{nombre}' es un directorio\n")
 
-        contenido = io.leer_string(f"Escribe en {nombre}: ", color.fore["INPUT"]).strip()
+        contenido = io.leer_string(f"Escribe en {nombre}: ").strip()
         with open(rutaArc, "a", encoding="utf-8") as archivo:
             archivo.write(f"\n{contenido}")
 
@@ -130,7 +130,7 @@ def eliminar_elemento(nombre):
         if not os.path.exists(rutaElem):
             raise FileNotFoundError(f"Error: el archivo o directorio '{nombre}' no existe\n")
 
-        confirmacion = io.leer_string(f"Confirmar eliminación de {nombre} (S/N): ", color.fore["INPUT"]).strip()
+        confirmacion = io.leer_string(f"Confirmar eliminación de {nombre} (S/N): ").strip()
         if confirmacion.lower() != "s":
             return f"Eliminación de '{nombre}' cancelada.\n"
         
@@ -180,7 +180,7 @@ def renombrar_elemento(nombre):
 
         rutaElem = os.path.join(ruta, nombre)
 
-        nuevoNombre = io.leer_string("\nIndica el nuevo nombre (con extensión si la tiene): ", color.fore["INPUT"]).strip()
+        nuevoNombre = io.leer_string("\nIndica el nuevo nombre (con extensión si la tiene): ").strip()
 
         io.comprobar_nombre(nuevoNombre)
 
@@ -215,7 +215,7 @@ def cambiar_ruta(nombre):
         if not os.path.isdir(rutaNueva):
             raise FileNotFoundError(f"Error: el directorio '{nombre}' no existe\n")
         
-        # protección para no salir de la carpeta de trabajo
+        # protección para no salir de la carpeta de pruebas
         baseReal  = os.path.realpath(rutaBase)
         nuevaReal = os.path.realpath(rutaNueva)
         if os.path.commonpath([baseReal, nuevaReal]) != baseReal:
@@ -237,7 +237,7 @@ def main():
         io.mostrar_ruta_actual(ruta)
 
         try:
-            opcion = io.leer_entero("\nSelecciona una opción: ", color.fore["INPUT"])
+            opcion = io.leer_entero("\nSelecciona una opción: ")
         except ValueError:
             io.imprimir("Error: introduce un número del 1 al 9.\n", color.fore["ERROR"])
             io.pulsa_enter()
@@ -253,7 +253,7 @@ def main():
 
             case 2:
                 try:
-                    nombre = io.leer_string("\nIndica el nombre del nuevo directorio: ", color.fore["INPUT"]).strip()
+                    nombre = io.leer_string("\nIndica el nombre del nuevo directorio: ").strip()
                     io.imprimir(crear_directorio(nombre), color.fore["SUCCESS"])
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
@@ -261,7 +261,7 @@ def main():
 
             case 3:
                 try:
-                    nombre = io.leer_string("\nIndica el nombre del nuevo archivo (con extensión .txt): ", color.fore["INPUT"]).strip()
+                    nombre = io.leer_string("\nIndica el nombre del nuevo archivo (con extensión .txt): ").strip()
                     io.imprimir(crear_archivo(nombre), color.fore["SUCCESS"])
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
@@ -269,7 +269,7 @@ def main():
 
             case 4:
                 try:
-                    nombre = io.leer_string("\nIndica el nombre del archivo (con extensión .txt): ", color.fore["INPUT"]).strip()
+                    nombre = io.leer_string("\nIndica el nombre del archivo (con extensión .txt): ").strip()
                     io.imprimir(escribir_en_archivo(nombre), color.fore["SUCCESS"])
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
@@ -277,7 +277,7 @@ def main():
 
             case 5:
                 try:
-                    nombre = io.leer_string("\nIndica el nombre del directorio o archivo a eliminar (con extensión): ", color.fore["INPUT"]).strip()
+                    nombre = io.leer_string("\nIndica el nombre del directorio o archivo a eliminar (con extensión): ").strip()
                     io.imprimir(eliminar_elemento(nombre), color.fore["SUCCESS"])
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
@@ -285,7 +285,7 @@ def main():
 
             case 6:
                 try:
-                    nombre = io.leer_string("\nIndica el nombre del directorio o archivo a mostrar (con extensión): ", color.fore["INPUT"]).strip()
+                    nombre = io.leer_string("\nIndica el nombre del directorio o archivo a mostrar (con extensión): ").strip()
                     mostrar_informacion(nombre)
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
@@ -293,7 +293,7 @@ def main():
 
             case 7:
                 try:
-                    nombre = io.leer_string("\nIndica el nombre del directorio o archivo a renombrar (con extensión): ", color.fore["INPUT"]).strip()
+                    nombre = io.leer_string("\nIndica el nombre del directorio o archivo a renombrar (con extensión): ").strip()
                     io.imprimir(renombrar_elemento(nombre), color.fore["SUCCESS"])
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])
@@ -301,7 +301,7 @@ def main():
 
             case 8:
                 try:
-                    nombre = io.leer_string("\nIndica el nombre del directorio al que navegar (navegar atrás con '..'): ", color.fore["INPUT"]).strip()
+                    nombre = io.leer_string("\nIndica el nombre del directorio al que navegar (navegar atrás con '..'): ").strip()
                     io.imprimir(cambiar_ruta(nombre), color.fore["SUCCESS"])
                 except Exception as e:
                     io.imprimir(str(e), color.fore["ERROR"])

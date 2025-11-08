@@ -5,11 +5,13 @@ import os
 ''' funciones output '''
 
 def imprimir(mensaje, color = None):
+    # Aplica el color indicado y muestra el mensaje
     if color != None:
         mensaje = color + mensaje + Style.RESET_ALL
     print(mensaje, end="")
 
 def imp_marco(mensaje, color = None):
+    # Envuelve el mensaje en un marco, le aplica el color indicado y lo muestra
     frases = mensaje.split("\n")
     longFrase = [len(frase) for frase in frases]
     longMax = max(longFrase)
@@ -25,6 +27,7 @@ def imp_marco(mensaje, color = None):
     print(f"\n{msjCompleto}")
 
 def mostrar_ruta_actual(rutaAct):
+    # Da formato a la ruta proporcionada para mostrarla "truncada" y con los datos de su contenido, le aplica color y la muestra
     tamanioRutaActual, numeroArchivosRutaActual = tamanio_recursivo(rutaAct)
 
     pasosRuta = rutaAct.split(os.sep)
@@ -38,7 +41,8 @@ def mostrar_ruta_actual(rutaAct):
 
 ''' funciones input '''
 
-def leer_entero(mensaje = "Introduce un número entero: ", color = None):
+def leer_entero(mensaje = "Introduce un número entero: ", color = color.fore["INPUT"]):
+    # muestra el mensaje solicitando un entero aplicando color, lo lee, lo evalúa y lo devuelve
     try:
         imprimir(mensaje, color)
         entero = int(input())
@@ -46,19 +50,22 @@ def leer_entero(mensaje = "Introduce un número entero: ", color = None):
         raise ValueError("Entrada no numérica")
     return entero
 
-def leer_string(mensaje = "Introduce un texto: ", color = None):
+def leer_string(mensaje = "Introduce un texto: ", color = color.fore["INPUT"]):
+    # muestra el mensaje solicitando un texto aplicando color, lo lee y lo devuelve
     imprimir(mensaje, color)
     return input()
 
 ''' otras funciones '''
 
 def pulsa_enter(color = None):
+    # Solicita un input pausando la ejecución
     if color != None:
         input(color + "\nPulsa enter para continuar..." + Style.RESET_ALL)
     else:
         input("\nPulsa enter para continuar...")
 
 def obtener_extension(ruta, archivo):
+    # Devuelve la extensión del archivo ("dir" si es un directorio y "file" si el archivo no tiene extensión)
     rutaArc = os.path.join(ruta, archivo)
     if os.path.isdir(rutaArc):
         return "dir"
@@ -68,6 +75,8 @@ def obtener_extension(ruta, archivo):
         return "." + archivo.split(".")[-1]
 
 def tamanio_recursivo(rutaDir):
+    # Calcula y devuelve el tamaño total de los archivos de una ruta y el número de estos
+    # Este es el motivo por el cual se crea la restricción a no salir de la carpeta de trabajo
     tamanioTotal = 0
     numeroArchivos = 0
 
@@ -97,11 +106,13 @@ def tamanio_recursivo(rutaDir):
     return tamanioTotal, numeroArchivos
 
 def comprobar_nombre(nombre):
+    # Rechaza los nombres que contenga "/", "\" o que sean ".", ".." o vacío
     if "/" in nombre or "\\" in nombre:
         raise ValueError("Error: el nombre no puede ser una ruta\n")
     if nombre in ("", ".", ".."):
         raise ValueError("Error: nombre no válido\n")
     
 def comprobar_txt(nombre):
+    # Rechaza los nombres que no acaben en ".txt"
     if nombre.split(".")[-1] != "txt":
         raise ValueError("Error: el archivo debe ser .txt\n")
